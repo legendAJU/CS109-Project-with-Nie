@@ -24,7 +24,7 @@ public class Chessboard {
     }
 
     private void initPieces() {
-        grid[0][0].setPiece(new ChessPiece(PlayerColor.BLUE, "Elephant", 8));
+        grid[6][6].setPiece(new ChessPiece(PlayerColor.BLUE, "Elephant", 8));
         grid[8][6].setPiece(new ChessPiece(PlayerColor.RED, "Elephant", 8));
     }
 
@@ -62,6 +62,7 @@ public class Chessboard {
             throw new IllegalArgumentException("Illegal chess capture!");
         }
         // TODO: Finish the method. (no problem so far)
+        removeChessPiece(dest);
         setChessPiece(dest, removeChessPiece(src));
 
     }
