@@ -24,8 +24,22 @@ public class Chessboard {
     }
 
     private void initPieces() {
-        grid[0][0].setPiece(new ChessPiece(PlayerColor.BLUE, "Elephant", 8));
-        grid[8][6].setPiece(new ChessPiece(PlayerColor.RED, "Elephant", 8));
+        grid[2][6].setPiece(new ChessPiece(PlayerColor.BLUE, "Elephant", 8));
+        grid[6][0].setPiece(new ChessPiece(PlayerColor.RED, "Elephant", 8));
+        grid[0][0].setPiece(new ChessPiece(PlayerColor.BLUE, "Lion", 7));
+        grid[8][6].setPiece(new ChessPiece(PlayerColor.RED, "Lion", 7));
+        grid[0][6].setPiece(new ChessPiece(PlayerColor.BLUE, "Tiger", 6));
+        grid[8][0].setPiece(new ChessPiece(PlayerColor.RED, "Tiger", 6));
+        grid[2][2].setPiece(new ChessPiece(PlayerColor.BLUE, "Leopard", 5));
+        grid[6][4].setPiece(new ChessPiece(PlayerColor.RED, "Leopard", 5));
+        grid[2][4].setPiece(new ChessPiece(PlayerColor.BLUE, "Wolf", 4));
+        grid[6][2].setPiece(new ChessPiece(PlayerColor.RED, "Wolf", 4));
+        grid[1][1].setPiece(new ChessPiece(PlayerColor.BLUE, "Dog", 3));
+        grid[7][5].setPiece(new ChessPiece(PlayerColor.RED, "Dog", 3));
+        grid[1][5].setPiece(new ChessPiece(PlayerColor.BLUE, "Cat", 2));
+        grid[7][1].setPiece(new ChessPiece(PlayerColor.RED, "Cat", 2));
+        grid[2][0].setPiece(new ChessPiece(PlayerColor.BLUE, "Rat", 1));
+        grid[6][6].setPiece(new ChessPiece(PlayerColor.RED, "Rat", 1));
     }
 
     private ChessPiece getChessPieceAt(ChessboardPoint point) {
@@ -62,6 +76,7 @@ public class Chessboard {
             throw new IllegalArgumentException("Illegal chess capture!");
         }
         // TODO: Finish the method. (no problem so far)
+        removeChessPiece(dest);
         setChessPiece(dest, removeChessPiece(src));
 
     }
@@ -167,19 +182,29 @@ public class Chessboard {
 
         }
 
+
+
         //正常四周吃
         if (calculateDistance(src, dest) == 1){
+            //水不能吃岸上 岸上也不能吃水里
+            if ((src.checkWater()==0||src.checkWater()==3)&&(dest.checkWater()==1||dest.checkWater()==2)){
+                return false;
+            }
+            if ((src.checkWater()==1||src.checkWater()==2)&&(dest.checkWater()==0||dest.checkWater()==3)){
+                return false;
+            }
             //老鼠水中吃
+            if ((dest.getRow()==0&&dest.getCol()==2)||(dest.getRow()==0&&dest.getCol()==4)
+                    ||(dest.getRow()==1&&dest.getCol()==3)||(dest.getRow()==7&&dest.getCol()==3)
+                    ||(dest.getRow()==8&&dest.getCol()==2)||(dest.getRow()==8&&dest.getCol()==4)){
+                return true;
+            }
+
             if ((dest.checkWater()==1||dest.checkWater()==2)&&(src.checkWater()==1||src.checkWater()==2)){
                 return true;
             }
-            //水不能吃岸上 岸上也不能吃水里
-            if ((dest.checkWater()==1||dest.checkWater()==2)&&(src.checkWater()==0)){
-                return false;
-            }
-            if (src.checkWater()==0&&(dest.checkWater()==1||dest.checkWater()==2)){
-                return false;
-            }
+
+
             return getChessPieceAt(src).canCapture(getChessPieceAt(dest));
         }
 
