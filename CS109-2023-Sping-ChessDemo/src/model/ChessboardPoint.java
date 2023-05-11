@@ -21,6 +21,28 @@ public class ChessboardPoint {
         return col;
     }
 
+
+    //0是无水，1是左边，2是右边，3是河岸
+    public int checkWater(){
+        if(this.row == 3||this.row == 4||this.row == 5){
+            if (this.col==1||this.col==2){
+                return 1;
+            }
+        }
+        if(this.row == 3||this.row == 4||this.row == 5){
+            if (this.col==4||this.col==5){
+                return 2;
+            }
+        }
+        if (row==2&&(col==1||col==2||col==4||col==5)){return 3;}
+        if (row==6&&(col==1||col==2||col==4||col==5)){return 3;}
+        if ((row==3||row==4||row==5)&&(col==0||col==3||col==6)){return 3;}
+
+        return 0;
+    }
+
+
+
     @Override
     public int hashCode() {
         return row + col;
@@ -38,6 +60,6 @@ public class ChessboardPoint {
 
     @Override
     public String toString() {
-        return "("+row + ","+col+") " + "on the chessboard is clicked!";
+        return "(" + row + "," + col + ") " + "on the chessboard is clicked!";
     }
 }
