@@ -9,6 +9,8 @@ import model.ChessboardPoint;
 import view.AnimalComponent.*;
 import view.CellComponent;
 import view.ChessboardComponent;
+import view.PalcesComponent.DensComponent;
+import view.PalcesComponent.TrapsComponent;
 
 import javax.swing.*;
 
@@ -82,67 +84,220 @@ public class GameController implements GameListener {
     @Override
     public void onPlayerClickCell(ChessboardPoint point, CellComponent component) {
         if (selectedPoint != null && model.isValidMove(selectedPoint, point ) && view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Rat")) {
-            model.moveChessPiece(selectedPoint, point);
-            view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfRat(selectedPoint));
-            selectedPoint = null;
-            swapColor();
-            view.repaint();
+            if((selectedPoint.getRow() == 0 && (selectedPoint.getCol() == 2 || selectedPoint.getCol() == 4)) || (selectedPoint.getRow() == 1 && selectedPoint.getCol() == 3)){
+                model.moveChessPiece(selectedPoint, point);
+                model.setBlueTrapsChessAt(selectedPoint);
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfRat(selectedPoint));
+                view.setTrapsAtGrid(selectedPoint,new TrapsComponent(PlayerColor.BLUE,72));
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
+            }else if(((selectedPoint.getRow() == 8 && (selectedPoint.getCol() == 2 || selectedPoint.getCol() == 4))) || (selectedPoint.getRow() == 7 && selectedPoint.getCol() == 3)){
+                model.moveChessPiece(selectedPoint, point);
+                model.setRedTrapsChessAt(selectedPoint);
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfRat(selectedPoint));
+                view.setTrapsAtGrid(selectedPoint,new TrapsComponent(PlayerColor.RED,72));
+
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
+            }else{
+                model.moveChessPiece(selectedPoint, point);
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfRat(selectedPoint));
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
+            }
             // TODO: if the chess enter Dens or Traps and so on
         }
         if (selectedPoint != null && model.isValidMove(selectedPoint, point ) && view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Cat")) {
-            model.moveChessPiece(selectedPoint, point);
-            view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfCat(selectedPoint));
-            selectedPoint = null;
-            swapColor();
-            view.repaint();
+            if((selectedPoint.getRow() == 0 && (selectedPoint.getCol() == 2 || selectedPoint.getCol() == 4)) || (selectedPoint.getRow() == 1 && selectedPoint.getCol() == 3)){
+                model.moveChessPiece(selectedPoint, point);
+                model.setBlueTrapsChessAt(selectedPoint);
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfCat(selectedPoint));
+                view.setTrapsAtGrid(selectedPoint,new TrapsComponent(PlayerColor.BLUE,72));
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
+            }else if(((selectedPoint.getRow() == 8 && (selectedPoint.getCol() == 2 || selectedPoint.getCol() == 4))) || (selectedPoint.getRow() == 7 && selectedPoint.getCol() == 3)){
+                model.moveChessPiece(selectedPoint, point);
+                model.setRedTrapsChessAt(selectedPoint);
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfCat(selectedPoint));
+                view.setTrapsAtGrid(selectedPoint,new TrapsComponent(PlayerColor.RED,72));
+
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
+            }else{
+                model.moveChessPiece(selectedPoint, point);
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfCat(selectedPoint));
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
+            }
             // TODO: if the chess enter Dens or Traps and so on
         }
         if (selectedPoint != null && model.isValidMove(selectedPoint, point ) && view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Dog")) {
-            model.moveChessPiece(selectedPoint, point);
-            view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfDog(selectedPoint));
-            selectedPoint = null;
-            swapColor();
-            view.repaint();
+            if((selectedPoint.getRow() == 0 && (selectedPoint.getCol() == 2 || selectedPoint.getCol() == 4)) || (selectedPoint.getRow() == 1 && selectedPoint.getCol() == 3)){
+                model.moveChessPiece(selectedPoint, point);
+                model.setBlueTrapsChessAt(selectedPoint);
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfDog(selectedPoint));
+                view.setTrapsAtGrid(selectedPoint,new TrapsComponent(PlayerColor.BLUE,72));
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
+            }else if(((selectedPoint.getRow() == 8 && (selectedPoint.getCol() == 2 || selectedPoint.getCol() == 4))) || (selectedPoint.getRow() == 7 && selectedPoint.getCol() == 3)){
+                model.moveChessPiece(selectedPoint, point);
+                model.setRedTrapsChessAt(selectedPoint);
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfDog(selectedPoint));
+                view.setTrapsAtGrid(selectedPoint,new TrapsComponent(PlayerColor.RED,72));
+
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
+            }else{
+                model.moveChessPiece(selectedPoint, point);
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfDog(selectedPoint));
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
+            }
             // TODO: if the chess enter Dens or Traps and so on
         }
         if (selectedPoint != null && model.isValidMove(selectedPoint, point ) && view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Lion")) {
-            model.moveChessPiece(selectedPoint, point);
-            view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLion(selectedPoint));
-            selectedPoint = null;
-            swapColor();
-            view.repaint();
+            if((selectedPoint.getRow() == 0 && (selectedPoint.getCol() == 2 || selectedPoint.getCol() == 4)) || (selectedPoint.getRow() == 1 && selectedPoint.getCol() == 3)){
+                model.moveChessPiece(selectedPoint, point);
+                model.setBlueTrapsChessAt(selectedPoint);
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLion(selectedPoint));
+                view.setTrapsAtGrid(selectedPoint,new TrapsComponent(PlayerColor.BLUE,72));
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
+            }else if(((selectedPoint.getRow() == 8 && (selectedPoint.getCol() == 2 || selectedPoint.getCol() == 4))) || (selectedPoint.getRow() == 7 && selectedPoint.getCol() == 3)){
+                model.moveChessPiece(selectedPoint, point);
+                model.setRedTrapsChessAt(selectedPoint);
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLion(selectedPoint));
+                view.setTrapsAtGrid(selectedPoint,new TrapsComponent(PlayerColor.RED,72));
+
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
+            }else{
+                model.moveChessPiece(selectedPoint, point);
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLion(selectedPoint));
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
+            }
             // TODO: if the chess enter Dens or Traps and so on
+
         }
         if (selectedPoint != null && model.isValidMove(selectedPoint, point ) && view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Tiger")) {
-            model.moveChessPiece(selectedPoint, point);
-            view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfTiger(selectedPoint));
-            selectedPoint = null;
-            swapColor();
-            view.repaint();
+            if((selectedPoint.getRow() == 0 && (selectedPoint.getCol() == 2 || selectedPoint.getCol() == 4)) || (selectedPoint.getRow() == 1 && selectedPoint.getCol() == 3)){
+                model.moveChessPiece(selectedPoint, point);
+                model.setBlueTrapsChessAt(selectedPoint);
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfTiger(selectedPoint));
+                view.setTrapsAtGrid(selectedPoint,new TrapsComponent(PlayerColor.BLUE,72));
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
+            }else if(((selectedPoint.getRow() == 8 && (selectedPoint.getCol() == 2 || selectedPoint.getCol() == 4))) || (selectedPoint.getRow() == 7 && selectedPoint.getCol() == 3)){
+                model.moveChessPiece(selectedPoint, point);
+                model.setRedTrapsChessAt(selectedPoint);
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfTiger(selectedPoint));
+                view.setTrapsAtGrid(selectedPoint,new TrapsComponent(PlayerColor.RED,72));
+
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
+            }else{
+                model.moveChessPiece(selectedPoint, point);
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfTiger(selectedPoint));
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
+            }
             // TODO: if the chess enter Dens or Traps and so on
         }
         if (selectedPoint != null && model.isValidMove(selectedPoint, point ) && view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Elephant")) {
-            model.moveChessPiece(selectedPoint, point);
-            view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfElephant(selectedPoint));
-            selectedPoint = null;
-            swapColor();
-            view.repaint();
+            if((selectedPoint.getRow() == 0 && (selectedPoint.getCol() == 2 || selectedPoint.getCol() == 4)) || (selectedPoint.getRow() == 1 && selectedPoint.getCol() == 3)){
+                model.moveChessPiece(selectedPoint, point);
+                model.setBlueTrapsChessAt(selectedPoint);
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfElephant(selectedPoint));
+                view.setTrapsAtGrid(selectedPoint,new TrapsComponent(PlayerColor.BLUE,72));
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
+            }else if(((selectedPoint.getRow() == 8 && (selectedPoint.getCol() == 2 || selectedPoint.getCol() == 4))) || (selectedPoint.getRow() == 7 && selectedPoint.getCol() == 3)){
+                model.moveChessPiece(selectedPoint, point);
+                model.setRedTrapsChessAt(selectedPoint);
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfElephant(selectedPoint));
+                view.setTrapsAtGrid(selectedPoint,new TrapsComponent(PlayerColor.RED,72));
+
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
+            }else{
+                model.moveChessPiece(selectedPoint, point);
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfElephant(selectedPoint));
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
+            }
             // TODO: if the chess enter Dens or Traps and so on
         }
         if (selectedPoint != null && model.isValidMove(selectedPoint, point ) && view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Wolf")) {
-            model.moveChessPiece(selectedPoint, point);
-            view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfWolf(selectedPoint));
-            selectedPoint = null;
-            swapColor();
-            view.repaint();
+            if((selectedPoint.getRow() == 0 && (selectedPoint.getCol() == 2 || selectedPoint.getCol() == 4)) || (selectedPoint.getRow() == 1 && selectedPoint.getCol() == 3)){
+                model.moveChessPiece(selectedPoint, point);
+                model.setBlueTrapsChessAt(selectedPoint);
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfWolf(selectedPoint));
+                view.setTrapsAtGrid(selectedPoint,new TrapsComponent(PlayerColor.BLUE,72));
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
+            }else if(((selectedPoint.getRow() == 8 && (selectedPoint.getCol() == 2 || selectedPoint.getCol() == 4))) || (selectedPoint.getRow() == 7 && selectedPoint.getCol() == 3)){
+                model.moveChessPiece(selectedPoint, point);
+                model.setRedTrapsChessAt(selectedPoint);
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfWolf(selectedPoint));
+                view.setTrapsAtGrid(selectedPoint,new TrapsComponent(PlayerColor.RED,72));
+
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
+            }else{
+                model.moveChessPiece(selectedPoint, point);
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfWolf(selectedPoint));
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
+            }
             // TODO: if the chess enter Dens or Traps and so on
         }
         if (selectedPoint != null && model.isValidMove(selectedPoint, point ) && view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Leopard")) {
-            model.moveChessPiece(selectedPoint, point);
-            view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLeopard(selectedPoint));
-            selectedPoint = null;
-            swapColor();
-            view.repaint();
+            if((selectedPoint.getRow() == 0 && (selectedPoint.getCol() == 2 || selectedPoint.getCol() == 4)) || (selectedPoint.getRow() == 1 && selectedPoint.getCol() == 3)){
+                model.moveChessPiece(selectedPoint, point);
+                model.setBlueTrapsChessAt(selectedPoint);
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLeopard(selectedPoint));
+                view.setTrapsAtGrid(selectedPoint,new TrapsComponent(PlayerColor.BLUE,72));
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
+            }else if(((selectedPoint.getRow() == 8 && (selectedPoint.getCol() == 2 || selectedPoint.getCol() == 4))) || (selectedPoint.getRow() == 7 && selectedPoint.getCol() == 3)){
+                model.moveChessPiece(selectedPoint, point);
+                model.setRedTrapsChessAt(selectedPoint);
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLeopard(selectedPoint));
+                view.setTrapsAtGrid(selectedPoint,new TrapsComponent(PlayerColor.RED,72));
+
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
+            }else{
+                model.moveChessPiece(selectedPoint, point);
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLeopard(selectedPoint));
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
+            }
             // TODO: if the chess enter Dens or Traps and so on
         }
 
@@ -395,6 +550,82 @@ public class GameController implements GameListener {
                 view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLion(selectedPoint));
             }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Tiger")){
                 view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfTiger(selectedPoint));
+            }
+            selectedPoint = null;
+            swapColor();
+            view.repaint();
+        }
+    }
+    public void onPlayerClickChessPiece(ChessboardPoint point, TrapsComponent component) {
+        if (selectedPoint == null) {
+            if (model.getChessPieceOwner(point).equals(currentPlayer)) {
+                selectedPoint = point;
+                component.setSelected(true);
+                component.repaint();
+            }
+        } else if (selectedPoint.equals(point)) {
+            selectedPoint = null;
+            component.setSelected(false);
+            component.repaint();
+        }
+        // TODO: Implement capture function
+        if (selectedPoint!=null&&model.isValidCapture(selectedPoint,point)){
+            model.captureChessPiece(selectedPoint,point);
+            view.removeChessComponentAtGridOfTraps(point);
+            if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Dog")){
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfDog(selectedPoint));
+            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Elephant")){
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfElephant(selectedPoint));
+            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Lion")){
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLion(selectedPoint));
+            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Tiger")){
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfTiger(selectedPoint));
+            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Leopard")){
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLeopard(selectedPoint));
+            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Wolf")){
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfWolf(selectedPoint));
+            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Cat")){
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfCat(selectedPoint));
+            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Rat")){
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfRat(selectedPoint));
+            }
+            selectedPoint = null;
+            swapColor();
+            view.repaint();
+        }
+    }
+    public void onPlayerClickChessPiece(ChessboardPoint point, DensComponent component) {
+        if (selectedPoint == null) {
+            if (model.getChessPieceOwner(point).equals(currentPlayer)) {
+                selectedPoint = point;
+                component.setSelected(true);
+                component.repaint();
+            }
+        } else if (selectedPoint.equals(point)) {
+            selectedPoint = null;
+            component.setSelected(false);
+            component.repaint();
+        }
+        // TODO: Implement capture function
+        if (selectedPoint!=null&&model.isValidCapture(selectedPoint,point)){
+            model.captureChessPiece(selectedPoint,point);
+            view.removeChessComponentAtGridOfDens(point);
+            if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Dog")){
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfDog(selectedPoint));
+            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Elephant")){
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfElephant(selectedPoint));
+            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Lion")){
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLion(selectedPoint));
+            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Tiger")){
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfTiger(selectedPoint));
+            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Leopard")){
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLeopard(selectedPoint));
+            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Wolf")){
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfWolf(selectedPoint));
+            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Cat")){
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfCat(selectedPoint));
+            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Rat")){
+                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfRat(selectedPoint));
             }
             selectedPoint = null;
             swapColor();

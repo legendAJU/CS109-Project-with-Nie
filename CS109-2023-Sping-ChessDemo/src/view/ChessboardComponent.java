@@ -99,14 +99,24 @@ public class ChessboardComponent extends JComponent {
                                 new LionChessComponent(
                                         chessPiece.getOwner(),
                                         CHESS_SIZE));
+                    }if(grid[i][j].getPiece().getName().equals("Traps")){
+                        gridComponents[i][j].add(
+                                new TrapsComponent(
+                                        chessPiece.getOwner(),
+                                        CHESS_SIZE));
+                    }if(grid[i][j].getPiece().getName().equals("Dens")){
+                        gridComponents[i][j].add(
+                                new DensComponent(
+                                        chessPiece.getOwner(),
+                                        CHESS_SIZE));
                     }
                     }
 
+            }
 
             }
         }
 
-    }
 
     public void initiateGridComponents() {
 
@@ -138,14 +148,7 @@ public class ChessboardComponent extends JComponent {
                 gridComponents[i][j] = cell;
             }
         }
-        gridComponents[0][3].add(new DensComponent(PlayerColor.BLUE,CHESS_SIZE));
-        gridComponents[8][3].add(new DensComponent(PlayerColor.RED,CHESS_SIZE));
-        gridComponents[0][2].add(new TrapsComponent(PlayerColor.BLUE,CHESS_SIZE));
-        gridComponents[0][4].add(new TrapsComponent(PlayerColor.BLUE,CHESS_SIZE));
-        gridComponents[1][3].add(new TrapsComponent(PlayerColor.BLUE,CHESS_SIZE));
-        gridComponents[8][2].add(new TrapsComponent(PlayerColor.RED,CHESS_SIZE));
-        gridComponents[8][4].add(new TrapsComponent(PlayerColor.RED,CHESS_SIZE));
-        gridComponents[7][3].add(new TrapsComponent(PlayerColor.RED,CHESS_SIZE));
+
 
     }
 
@@ -176,6 +179,12 @@ public class ChessboardComponent extends JComponent {
     }
     public void setChessComponentAtGrid(ChessboardPoint point, LeopardChessComponent chess) {
         getGridComponentAt(point).add(chess);
+    }
+    public void setTrapsAtGrid(ChessboardPoint point, TrapsComponent trapsComponent){
+        getGridComponentAt(point).add(trapsComponent);
+    }
+    public void setGensAtGrid(ChessboardPoint point, DensComponent densComponent){
+        getGridComponentAt(point).add(densComponent);
     }
 
     public ElephantChessComponent removeChessComponentAtGridOfElephant(ChessboardPoint point) {
@@ -242,6 +251,23 @@ public class ChessboardComponent extends JComponent {
         chess.setSelected(false);
         return chess;
     }
+    public TrapsComponent removeChessComponentAtGridOfTraps(ChessboardPoint point) {
+        // Note re-validation is required after remove / removeAll.
+        TrapsComponent chess = (TrapsComponent) getGridComponentAt(point).getComponents()[0];
+        getGridComponentAt(point).removeAll();
+        getGridComponentAt(point).revalidate();
+        chess.setSelected(false);
+        return chess;
+    }
+    public DensComponent removeChessComponentAtGridOfDens(ChessboardPoint point) {
+        // Note re-validation is required after remove / removeAll.
+        DensComponent chess = (DensComponent) getGridComponentAt(point).getComponents()[0];
+        getGridComponentAt(point).removeAll();
+        getGridComponentAt(point).revalidate();
+        chess.setSelected(false);
+        return chess;
+    }
+
 
 
     public CellComponent getGridComponentAt(ChessboardPoint point) {
@@ -300,6 +326,13 @@ public class ChessboardComponent extends JComponent {
             else if(clickedComponent.getComponents()[0].getName().equals("Leopard")){
                 System.out.print("One chess here and ");
                 gameController.onPlayerClickChessPiece(getChessboardPoint(e.getPoint()), (LeopardChessComponent) clickedComponent.getComponents()[0]);
+            }else if(clickedComponent.getComponents()[0].getName().equals("Traps")){
+                System.out.print("One chess here and ");
+                gameController.onPlayerClickChessPiece(getChessboardPoint(e.getPoint()), (TrapsComponent) clickedComponent.getComponents()[0]);
+            }
+            else if(clickedComponent.getComponents()[0].getName().equals("Dens")){
+                System.out.print("One chess here and ");
+                gameController.onPlayerClickChessPiece(getChessboardPoint(e.getPoint()), (DensComponent) clickedComponent.getComponents()[0]);
             }
         }
     }

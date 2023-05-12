@@ -40,6 +40,15 @@ public class Chessboard {
         grid[7][1].setPiece(new ChessPiece(PlayerColor.RED, "Cat", 2));
         grid[2][0].setPiece(new ChessPiece(PlayerColor.BLUE, "Rat", 1));
         grid[6][6].setPiece(new ChessPiece(PlayerColor.RED, "Rat", 1));
+        grid[0][2].setPiece(new ChessPiece(PlayerColor.BLUE,"Traps",0));
+        grid[0][4].setPiece(new ChessPiece(PlayerColor.BLUE,"Traps",0));
+        grid[1][3].setPiece(new ChessPiece(PlayerColor.BLUE,"Traps",0));
+        grid[7][3].setPiece(new ChessPiece(PlayerColor.RED,"Traps",0));
+        grid[8][2].setPiece(new ChessPiece(PlayerColor.RED,"Traps",0));
+        grid[8][4].setPiece(new ChessPiece(PlayerColor.RED,"Traps",0));
+        grid[0][3].setPiece(new ChessPiece(PlayerColor.BLUE,"Dens",0));
+        grid[8][3].setPiece(new ChessPiece(PlayerColor.RED,"Dens",0));
+
     }
 
     private ChessPiece getChessPieceAt(ChessboardPoint point) {
@@ -209,5 +218,11 @@ public class Chessboard {
         }
 
         return false;
+    }
+    public void setBlueTrapsChessAt(ChessboardPoint point){
+        grid[point.getRow()][point.getCol()].setPiece(new ChessPiece(PlayerColor.BLUE,"Traps",0));
+    }
+    public void setRedTrapsChessAt(ChessboardPoint point){
+        grid[point.getRow()][point.getCol()].setPiece(new ChessPiece(PlayerColor.RED,"Traps",0));
     }
 }
