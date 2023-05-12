@@ -39,10 +39,18 @@ public class CatChessComponent extends JComponent {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        Font font = new Font("楷体", Font.PLAIN, getWidth() / 2);
-        g2.setFont(font);
-        g2.setColor(owner.getColor());
-        g2.drawString("猫", getWidth() / 4, getHeight() * 5 / 8); // FIXME: Use library to find the correct offset.
+        ImageIcon icon = null;
+        if(owner == PlayerColor.BLUE){
+            icon = new ImageIcon("D:\\大一\\大一下课程\\java\\FirstDraftOfProject\\CS109-Project-with-Nie\\CS109-2023-Sping-ChessDemo\\resource\\CatInBlue.png");
+        }else if(owner == PlayerColor.RED){
+            icon = new ImageIcon("D:\\大一\\大一下课程\\java\\FirstDraftOfProject\\CS109-Project-with-Nie\\CS109-2023-Sping-ChessDemo\\resource\\CatInRed.png");
+        }
+        Image image = icon.getImage();
+        int newWidth = image.getWidth(null) / 2; // 计算缩小后的宽度
+        int newHeight = image.getHeight(null) / 2; // 计算缩小后的高度
+        int x = (getWidth() - newWidth) / 2; // 计算图像的 x 坐标
+        int y = (getHeight() - newHeight) / 2; // 计算图像的 y 坐标
+        g2.drawImage(image, x, y, newWidth, newHeight, null);
         if (isSelected()) { // Highlights the model if selected.
             g.setColor(Color.RED);
             g.drawOval(0, 0, getWidth() , getHeight());

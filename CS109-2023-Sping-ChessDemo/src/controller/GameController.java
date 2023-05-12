@@ -319,17 +319,53 @@ public class GameController implements GameListener {
         }
         // TODO: Implement capture function
         if (selectedPoint!=null&&model.isValidCapture(selectedPoint,point)){
-            model.captureChessPiece(selectedPoint,point);
-            view.removeChessComponentAtGridOfElephant(point);
-            if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Rat")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfRat(selectedPoint));
-            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Elephant")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfElephant(selectedPoint));
+            if(model.getGrid()[point.getRow()][point.getCol()].getPiece().getName().equals("Traps")){
+                model.captureChessPiece(selectedPoint,point);
+                view.removeChessComponentAtGridOfTraps(point);
+                if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Dog")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfDog(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Elephant")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfElephant(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Lion")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLion(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Tiger")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfTiger(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Leopard")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLeopard(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Wolf")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfWolf(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Cat")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfCat(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Rat")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfRat(selectedPoint));
+                }
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
+            }else{
+                model.captureChessPiece(selectedPoint,point);
+                view.removeChessComponentAtGridOfElephant(point);
+                if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Dog")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfDog(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Elephant")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfElephant(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Lion")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLion(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Tiger")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfTiger(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Leopard")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLeopard(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Wolf")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfWolf(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Cat")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfCat(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Rat")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfRat(selectedPoint));
+                }
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
             }
-
-            selectedPoint = null;
-            swapColor();
-            view.repaint();
         }
 
     }
@@ -347,20 +383,56 @@ public class GameController implements GameListener {
         }
         // TODO: Implement capture function
         if (selectedPoint!=null&&model.isValidCapture(selectedPoint,point)){
-            model.captureChessPiece(selectedPoint,point);
-            view.removeChessComponentAtGridOfTiger(point);
-            if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Elephant")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfElephant(selectedPoint));
-            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Tiger")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfTiger(selectedPoint));
-            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Lion")){
-                view.setChessComponentAtGrid(point,view.removeChessComponentAtGridOfLion(selectedPoint));
+            if(model.getGrid()[point.getRow()][point.getCol()].getPiece().getName().equals("Traps")){
+                model.captureChessPiece(selectedPoint,point);
+                view.removeChessComponentAtGridOfTraps(point);
+                if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Dog")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfDog(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Elephant")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfElephant(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Lion")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLion(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Tiger")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfTiger(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Leopard")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLeopard(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Wolf")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfWolf(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Cat")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfCat(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Rat")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfRat(selectedPoint));
+                }
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
+            }else{
+                model.captureChessPiece(selectedPoint,point);
+                view.removeChessComponentAtGridOfTiger(point);
+                if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Dog")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfDog(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Elephant")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfElephant(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Lion")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLion(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Tiger")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfTiger(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Leopard")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLeopard(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Wolf")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfWolf(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Cat")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfCat(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Rat")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfRat(selectedPoint));
+                }
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
             }
-            selectedPoint = null;
-            swapColor();
-            view.repaint();
         }
-    }public void onPlayerClickChessPiece(ChessboardPoint point, LionChessComponent component) {
+    }
+    public void onPlayerClickChessPiece(ChessboardPoint point, LionChessComponent component) {
         if (selectedPoint == null) {
             if (model.getChessPieceOwner(point).equals(currentPlayer)) {
                 selectedPoint = point;
@@ -374,16 +446,53 @@ public class GameController implements GameListener {
         }
         // TODO: Implement capture function
         if (selectedPoint!=null&&model.isValidCapture(selectedPoint,point)){
-            model.captureChessPiece(selectedPoint,point);
-            view.removeChessComponentAtGridOfLion(point);
-            if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Elephant")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfElephant(selectedPoint));
-            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Lion")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLion(selectedPoint));
+            if(model.getGrid()[point.getRow()][point.getCol()].getPiece().getName().equals("Traps")){
+                model.captureChessPiece(selectedPoint,point);
+                view.removeChessComponentAtGridOfTraps(point);
+                if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Dog")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfDog(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Elephant")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfElephant(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Lion")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLion(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Tiger")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfTiger(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Leopard")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLeopard(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Wolf")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfWolf(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Cat")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfCat(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Rat")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfRat(selectedPoint));
+                }
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
+            }else{
+                model.captureChessPiece(selectedPoint,point);
+                view.removeChessComponentAtGridOfLion(point);
+                if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Dog")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfDog(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Elephant")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfElephant(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Lion")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLion(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Tiger")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfTiger(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Leopard")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLeopard(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Wolf")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfWolf(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Cat")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfCat(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Rat")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfRat(selectedPoint));
+                }
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
             }
-            selectedPoint = null;
-            swapColor();
-            view.repaint();
         }
     }
     public void onPlayerClickChessPiece(ChessboardPoint point, DogChessComponent component) {
@@ -400,24 +509,55 @@ public class GameController implements GameListener {
         }
         // TODO: Implement capture function
         if (selectedPoint!=null&&model.isValidCapture(selectedPoint,point)){
-            model.captureChessPiece(selectedPoint,point);
-            view.removeChessComponentAtGridOfDog(point);
-            if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Dog")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfDog(selectedPoint));
-            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Elephant")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfElephant(selectedPoint));
-            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Lion")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLion(selectedPoint));
-            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Tiger")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfTiger(selectedPoint));
-            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Leopard")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLeopard(selectedPoint));
-            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Wolf")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfWolf(selectedPoint));
+            if (selectedPoint!=null&&model.isValidCapture(selectedPoint,point)){
+                if(model.getGrid()[point.getRow()][point.getCol()].getPiece().getName().equals("Traps")){
+                    model.captureChessPiece(selectedPoint,point);
+                    view.removeChessComponentAtGridOfTraps(point);
+                    if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Dog")){
+                        view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfDog(selectedPoint));
+                    }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Elephant")){
+                        view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfElephant(selectedPoint));
+                    }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Lion")){
+                        view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLion(selectedPoint));
+                    }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Tiger")){
+                        view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfTiger(selectedPoint));
+                    }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Leopard")){
+                        view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLeopard(selectedPoint));
+                    }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Wolf")){
+                        view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfWolf(selectedPoint));
+                    }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Cat")){
+                        view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfCat(selectedPoint));
+                    }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Rat")){
+                        view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfRat(selectedPoint));
+                    }
+                    selectedPoint = null;
+                    swapColor();
+                    view.repaint();
+                }else{
+                    model.captureChessPiece(selectedPoint,point);
+                    view.removeChessComponentAtGridOfDog(point);
+                    if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Dog")){
+                        view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfDog(selectedPoint));
+                    }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Elephant")){
+                        view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfElephant(selectedPoint));
+                    }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Lion")){
+                        view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLion(selectedPoint));
+                    }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Tiger")){
+                        view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfTiger(selectedPoint));
+                    }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Leopard")){
+                        view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLeopard(selectedPoint));
+                    }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Wolf")){
+                        view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfWolf(selectedPoint));
+                    }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Cat")){
+                        view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfCat(selectedPoint));
+                    }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Rat")){
+                        view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfRat(selectedPoint));
+                    }
+                    selectedPoint = null;
+                    swapColor();
+                    view.repaint();
+                }
             }
-            selectedPoint = null;
-            swapColor();
-            view.repaint();
         }
     }
     public void onPlayerClickChessPiece(ChessboardPoint point, CatChessComponent component) {
@@ -434,26 +574,53 @@ public class GameController implements GameListener {
         }
         // TODO: Implement capture function
         if (selectedPoint!=null&&model.isValidCapture(selectedPoint,point)){
-            model.captureChessPiece(selectedPoint,point);
-            view.removeChessComponentAtGridOfCat(point);
-            if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Dog")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfDog(selectedPoint));
-            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Elephant")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfElephant(selectedPoint));
-            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Lion")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLion(selectedPoint));
-            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Tiger")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfTiger(selectedPoint));
-            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Leopard")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLeopard(selectedPoint));
-            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Wolf")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfWolf(selectedPoint));
-            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Cat")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfCat(selectedPoint));
+            if(model.getGrid()[point.getRow()][point.getCol()].getPiece().getName().equals("Traps")){
+                model.captureChessPiece(selectedPoint,point);
+                view.removeChessComponentAtGridOfTraps(point);
+                if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Dog")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfDog(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Elephant")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfElephant(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Lion")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLion(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Tiger")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfTiger(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Leopard")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLeopard(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Wolf")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfWolf(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Cat")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfCat(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Rat")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfRat(selectedPoint));
+                }
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
+            }else{
+                model.captureChessPiece(selectedPoint,point);
+                view.removeChessComponentAtGridOfCat(point);
+                if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Dog")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfDog(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Elephant")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfElephant(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Lion")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLion(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Tiger")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfTiger(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Leopard")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLeopard(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Wolf")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfWolf(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Cat")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfCat(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Rat")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfRat(selectedPoint));
+                }
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
             }
-            selectedPoint = null;
-            swapColor();
-            view.repaint();
         }
     }
     public void onPlayerClickChessPiece(ChessboardPoint point, RatChessComponent component) {
@@ -470,28 +637,53 @@ public class GameController implements GameListener {
         }
         // TODO: Implement capture function
         if (selectedPoint!=null&&model.isValidCapture(selectedPoint,point)){
-            model.captureChessPiece(selectedPoint,point);
-            view.removeChessComponentAtGridOfRat(point);
-            if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Dog")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfDog(selectedPoint));
-            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Elephant")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfElephant(selectedPoint));
-            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Lion")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLion(selectedPoint));
-            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Tiger")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfTiger(selectedPoint));
-            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Leopard")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLeopard(selectedPoint));
-            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Wolf")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfWolf(selectedPoint));
-            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Cat")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfCat(selectedPoint));
-            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Rat")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfRat(selectedPoint));
+            if(model.getGrid()[point.getRow()][point.getCol()].getPiece().getName().equals("Traps")){
+                model.captureChessPiece(selectedPoint,point);
+                view.removeChessComponentAtGridOfTraps(point);
+                if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Dog")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfDog(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Elephant")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfElephant(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Lion")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLion(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Tiger")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfTiger(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Leopard")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLeopard(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Wolf")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfWolf(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Cat")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfCat(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Rat")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfRat(selectedPoint));
+                }
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
+            }else{
+                model.captureChessPiece(selectedPoint,point);
+                view.removeChessComponentAtGridOfRat(point);
+                if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Dog")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfDog(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Elephant")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfElephant(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Lion")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLion(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Tiger")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfTiger(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Leopard")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLeopard(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Wolf")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfWolf(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Cat")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfCat(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Rat")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfRat(selectedPoint));
+                }
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
             }
-            selectedPoint = null;
-            swapColor();
-            view.repaint();
         }
     }
     public void onPlayerClickChessPiece(ChessboardPoint point, WolfChessComponent component) {
@@ -508,22 +700,53 @@ public class GameController implements GameListener {
         }
         // TODO: Implement capture function
         if (selectedPoint!=null&&model.isValidCapture(selectedPoint,point)){
-            model.captureChessPiece(selectedPoint,point);
-            view.removeChessComponentAtGridOfWolf(point);
-            if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Wolf")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfWolf(selectedPoint));
-            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Elephant")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfElephant(selectedPoint));
-            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Lion")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLion(selectedPoint));
-            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Tiger")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfTiger(selectedPoint));
-            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Leopard")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLeopard(selectedPoint));
+            if(model.getGrid()[point.getRow()][point.getCol()].getPiece().getName().equals("Traps")){
+                model.captureChessPiece(selectedPoint,point);
+                view.removeChessComponentAtGridOfTraps(point);
+                if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Dog")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfDog(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Elephant")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfElephant(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Lion")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLion(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Tiger")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfTiger(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Leopard")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLeopard(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Wolf")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfWolf(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Cat")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfCat(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Rat")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfRat(selectedPoint));
+                }
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
+            }else{
+                model.captureChessPiece(selectedPoint,point);
+                view.removeChessComponentAtGridOfWolf(point);
+                if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Dog")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfDog(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Elephant")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfElephant(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Lion")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLion(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Tiger")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfTiger(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Leopard")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLeopard(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Wolf")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfWolf(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Cat")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfCat(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Rat")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfRat(selectedPoint));
+                }
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
             }
-            selectedPoint = null;
-            swapColor();
-            view.repaint();
         }
     }
     public void onPlayerClickChessPiece(ChessboardPoint point, LeopardChessComponent component) {
@@ -540,20 +763,53 @@ public class GameController implements GameListener {
         }
         // TODO: Implement capture function
         if (selectedPoint!=null&&model.isValidCapture(selectedPoint,point)){
-            model.captureChessPiece(selectedPoint,point);
-            view.removeChessComponentAtGridOfLeopard(point);
-            if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Leopard")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLeopard(selectedPoint));
-            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Elephant")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfElephant(selectedPoint));
-            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Lion")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLion(selectedPoint));
-            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Tiger")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfTiger(selectedPoint));
+            if(model.getGrid()[point.getRow()][point.getCol()].getPiece().getName().equals("Traps")){
+                model.captureChessPiece(selectedPoint,point);
+                view.removeChessComponentAtGridOfTraps(point);
+                if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Dog")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfDog(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Elephant")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfElephant(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Lion")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLion(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Tiger")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfTiger(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Leopard")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLeopard(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Wolf")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfWolf(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Cat")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfCat(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Rat")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfRat(selectedPoint));
+                }
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
+            }else{
+                model.captureChessPiece(selectedPoint,point);
+                view.removeChessComponentAtGridOfLeopard(point);
+                if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Dog")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfDog(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Elephant")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfElephant(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Lion")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLion(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Tiger")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfTiger(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Leopard")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLeopard(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Wolf")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfWolf(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Cat")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfCat(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Rat")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfRat(selectedPoint));
+                }
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
             }
-            selectedPoint = null;
-            swapColor();
-            view.repaint();
         }
     }
     public void onPlayerClickChessPiece(ChessboardPoint point, TrapsComponent component) {
@@ -570,28 +826,53 @@ public class GameController implements GameListener {
         }
         // TODO: Implement capture function
         if (selectedPoint!=null&&model.isValidCapture(selectedPoint,point)){
-            model.captureChessPiece(selectedPoint,point);
-            view.removeChessComponentAtGridOfTraps(point);
-            if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Dog")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfDog(selectedPoint));
-            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Elephant")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfElephant(selectedPoint));
-            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Lion")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLion(selectedPoint));
-            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Tiger")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfTiger(selectedPoint));
-            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Leopard")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLeopard(selectedPoint));
-            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Wolf")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfWolf(selectedPoint));
-            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Cat")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfCat(selectedPoint));
-            }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Rat")){
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfRat(selectedPoint));
+            if(model.getGrid()[point.getRow()][point.getCol()].getPiece().getName().equals("Traps")){
+                model.captureChessPiece(selectedPoint,point);
+                view.removeChessComponentAtGridOfTraps(point);
+                if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Dog")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfDog(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Elephant")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfElephant(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Lion")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLion(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Tiger")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfTiger(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Leopard")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLeopard(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Wolf")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfWolf(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Cat")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfCat(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Rat")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfRat(selectedPoint));
+                }
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
+            }else{
+                model.captureChessPiece(selectedPoint,point);
+                view.removeChessComponentAtGridOfTraps(point);
+                if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Dog")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfDog(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Elephant")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfElephant(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Lion")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLion(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Tiger")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfTiger(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Leopard")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfLeopard(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Wolf")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfWolf(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Cat")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfCat(selectedPoint));
+                }else if(view.getGridComponentAt(selectedPoint).getComponents()[0].getName().equals("Rat")){
+                    view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfRat(selectedPoint));
+                }
+                selectedPoint = null;
+                swapColor();
+                view.repaint();
             }
-            selectedPoint = null;
-            swapColor();
-            view.repaint();
         }
     }
     public void onPlayerClickChessPiece(ChessboardPoint point, DensComponent component) {
