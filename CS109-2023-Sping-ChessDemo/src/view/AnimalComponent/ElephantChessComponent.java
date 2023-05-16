@@ -48,9 +48,9 @@ public class ElephantChessComponent extends JComponent {
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         ImageIcon icon = null;
         if(owner == PlayerColor.BLUE){
-            icon = new ImageIcon("D:\\大一\\大一下课程\\java\\FirstDraftOfProject\\CS109-Project-with-Nie\\CS109-2023-Sping-ChessDemo\\resource\\ElephantInBlue.png");
+            icon = new ImageIcon("E:\\OneDrive - 南方科技大学\\桌面\\大一下\\cs\\斗兽棋\\resource\\ElephantInBlue.png");
         }else if(owner == PlayerColor.RED){
-            icon = new ImageIcon("D:\\大一\\大一下课程\\java\\FirstDraftOfProject\\CS109-Project-with-Nie\\CS109-2023-Sping-ChessDemo\\resource\\ElephantInRed.png");
+            icon = new ImageIcon("E:\\OneDrive - 南方科技大学\\桌面\\大一下\\cs\\斗兽棋\\resource\\ElephantInRed.png");
         }
         Image image = icon.getImage();
         int newWidth = image.getWidth(null) / 2; // 计算缩小后的宽度

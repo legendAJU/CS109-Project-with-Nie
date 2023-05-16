@@ -936,7 +936,7 @@ public class GameController implements GameListener {
     }
 
     public void loadTextFileAndLoadTheGame(String archive){
-        String path = "D:\\大一\\大一下课程\\java\\FirstDraftOfProject\\CS109-Project-with-Nie\\CS109-2023-Sping-ChessDemo\\GameFiles\\" + archive;
+        String path = "E:\\OneDrive - 南方科技大学\\桌面\\大一下\\cs\\斗兽棋\\cs5_16\\CS109-Project-with-Nie-master\\CS109-2023-Sping-ChessDemo\\GameFiles\\" + archive;
 
         try {
             List<String> lines = Files.readAllLines(Path.of(path));
@@ -996,7 +996,7 @@ public class GameController implements GameListener {
     }
 
     public void storeGameIntoFile(String archive){
-        String path = "D:\\大一\\大一下课程\\java\\FirstDraftOfProject\\CS109-Project-with-Nie\\CS109-2023-Sping-ChessDemo\\GameFiles\\" + archive;
+        String path = "E:\\OneDrive - 南方科技大学\\桌面\\大一下\\cs\\斗兽棋\\cs5_16\\CS109-Project-with-Nie-master\\CS109-2023-Sping-ChessDemo\\GameFiles\\" + archive;
 
         try {
             List<String> lines = Files.readAllLines(Path.of(path));
@@ -1081,6 +1081,16 @@ public class GameController implements GameListener {
     }
     public PlayerColor getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    public void regret(){
+        selectedPoint = null;
+        view.removeAllPieceComponent();
+        model.undo();
+        view.initiateChessComponent(model);
+        swapColor();
+        view.repaint();
+
     }
 }
 

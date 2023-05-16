@@ -167,9 +167,17 @@ public class ChessGameFrame extends JFrame {
     }
     private void addRegretButton(){
         JButton button = new JButton("Regret");
+        button.addActionListener((e) -> {
+            int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to regret?", "Confirmation", JOptionPane.YES_NO_OPTION);
+            if (result == JOptionPane.YES_OPTION) {
+                chessboardComponent.getGameController().regret();
+            }
+        });
         button.setLocation(HEIGTH, HEIGTH / 10 + 480);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
+
+
         add(button);
     }
 

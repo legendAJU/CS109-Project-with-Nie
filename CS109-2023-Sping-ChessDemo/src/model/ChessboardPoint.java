@@ -8,6 +8,7 @@ public class ChessboardPoint {
     private final int row;
     private final int col;
 
+
     public ChessboardPoint(int row, int col) {
         this.row = row;
         this.col = col;
