@@ -24,6 +24,10 @@ public class ChessboardComponent extends JComponent {
     private final int CHESS_SIZE;
     private final Set<ChessboardPoint> riverCell = new HashSet<>();
 
+    public GameController getGameController() {
+        return gameController;
+    }
+
     private GameController gameController;
 
     public ChessboardComponent(int chessSize) {
@@ -116,7 +120,35 @@ public class ChessboardComponent extends JComponent {
 
             }
         }
-
+    public void removeAllPieceComponent(){
+        for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
+            for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
+                if(gridComponents[i][j].getComponents().length != 0){
+                    if(gridComponents[i][j].getComponents()[0].getName().equals("Elephant")){
+                        removeChessComponentAtGridOfElephant(new ChessboardPoint(i,j));
+                    }else if(gridComponents[i][j].getComponents()[0].getName().equals("Lion")){
+                        removeChessComponentAtGridOfLion(new ChessboardPoint(i,j));
+                    }else if(gridComponents[i][j].getComponents()[0].getName().equals("Tiger")){
+                        removeChessComponentAtGridOfTiger(new ChessboardPoint(i,j));
+                    }else if(gridComponents[i][j].getComponents()[0].getName().equals("Leopard")){
+                        removeChessComponentAtGridOfLeopard(new ChessboardPoint(i,j));
+                    }else if(gridComponents[i][j].getComponents()[0].getName().equals("Wolf")){
+                        removeChessComponentAtGridOfWolf(new ChessboardPoint(i,j));
+                    }else if(gridComponents[i][j].getComponents()[0].getName().equals("Dog")){
+                        removeChessComponentAtGridOfDog(new ChessboardPoint(i,j));
+                    }else if(gridComponents[i][j].getComponents()[0].getName().equals("Cat")){
+                        removeChessComponentAtGridOfCat(new ChessboardPoint(i,j));
+                    }else if(gridComponents[i][j].getComponents()[0].getName().equals("Rat")){
+                        removeChessComponentAtGridOfRat(new ChessboardPoint(i,j));
+                    }else if(gridComponents[i][j].getComponents()[0].getName().equals("Traps")){
+                        removeChessComponentAtGridOfTraps(new ChessboardPoint(i,j));
+                    }else if(gridComponents[i][j].getComponents()[0].getName().equals("Dens")){
+                        removeChessComponentAtGridOfDens(new ChessboardPoint(i,j));
+                    }
+                }
+            }
+        }
+    }
 
     public void initiateGridComponents() {
 

@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 /**
  * This class store the real chess information.
  * The Chessboard has 9*7 cells, and each cell has a position for chess
@@ -23,7 +25,7 @@ public class Chessboard {
         }
     }
 
-    private void initPieces() {
+    public void initPieces() {
         grid[2][6].setPiece(new ChessPiece(PlayerColor.BLUE, "Elephant", 8));
         grid[6][0].setPiece(new ChessPiece(PlayerColor.RED, "Elephant", 8));
         grid[0][0].setPiece(new ChessPiece(PlayerColor.BLUE, "Lion", 7));
@@ -51,7 +53,74 @@ public class Chessboard {
 
     }
 
-    private ChessPiece getChessPieceAt(ChessboardPoint point) {
+    public void removeAllPieces(){
+        for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
+            for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
+                if(grid[i][j].getPiece() != null){
+                    grid[i][j].setPiece(null);
+                }
+            }
+        }
+    }
+    public void setPiecesFromText(List<String> lines){
+        for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
+            for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
+               if(lines.get(i).charAt(j) == 'a'){
+                   grid[i][j].setPiece(new ChessPiece(PlayerColor.RED,"Dens",0));
+               }else if(lines.get(i).charAt(j) == 'A'){
+                   grid[i][j].setPiece(new ChessPiece(PlayerColor.BLUE,"Dens",0));
+               }
+                if(lines.get(i).charAt(j) == 'b'){
+                    grid[i][j].setPiece(new ChessPiece(PlayerColor.RED,"Traps",1));
+                }else if(lines.get(i).charAt(j) == 'B'){
+                    grid[i][j].setPiece(new ChessPiece(PlayerColor.BLUE,"Traps",1));
+                }
+                if(lines.get(i).charAt(j) == 'c'){
+                    grid[i][j].setPiece(new ChessPiece(PlayerColor.RED,"Elephant",8));
+                }else if(lines.get(i).charAt(j) == 'C'){
+                    grid[i][j].setPiece(new ChessPiece(PlayerColor.BLUE,"Elephant",8));
+                }
+                if(lines.get(i).charAt(j) == 'd'){
+                    grid[i][j].setPiece(new ChessPiece(PlayerColor.RED,"Lion",7));
+                }else if(lines.get(i).charAt(j) == 'D'){
+                    grid[i][j].setPiece(new ChessPiece(PlayerColor.BLUE,"Lion",7));
+                }
+                if(lines.get(i).charAt(j) == 'e'){
+                    grid[i][j].setPiece(new ChessPiece(PlayerColor.RED,"Tiger",6));
+                }else if(lines.get(i).charAt(j) == 'E'){
+                    grid[i][j].setPiece(new ChessPiece(PlayerColor.BLUE,"Tiger",6));
+                }
+                if(lines.get(i).charAt(j) == 'f'){
+                    grid[i][j].setPiece(new ChessPiece(PlayerColor.RED,"Leopard",5));
+                }else if(lines.get(i).charAt(j) == 'F'){
+                    grid[i][j].setPiece(new ChessPiece(PlayerColor.BLUE,"Leopard",5));
+                }
+                if(lines.get(i).charAt(j) == 'g'){
+                    grid[i][j].setPiece(new ChessPiece(PlayerColor.RED,"Wolf",4));
+                }else if(lines.get(i).charAt(j) == 'G'){
+                    grid[i][j].setPiece(new ChessPiece(PlayerColor.BLUE,"Wolf",4));
+                }
+                if(lines.get(i).charAt(j) == 'h'){
+                    grid[i][j].setPiece(new ChessPiece(PlayerColor.RED,"Dog",3));
+                }else if(lines.get(i).charAt(j) == 'H'){
+                    grid[i][j].setPiece(new ChessPiece(PlayerColor.BLUE,"Dog",3));
+                }
+                if(lines.get(i).charAt(j) == 'i'){
+                    grid[i][j].setPiece(new ChessPiece(PlayerColor.RED,"Cat",2));
+                }else if(lines.get(i).charAt(j) == 'I'){
+                    grid[i][j].setPiece(new ChessPiece(PlayerColor.BLUE,"Cat",2));
+                }
+                if(lines.get(i).charAt(j) == 'j'){
+                    grid[i][j].setPiece(new ChessPiece(PlayerColor.RED,"Rat",1));
+                }else if(lines.get(i).charAt(j) == 'J'){
+                    grid[i][j].setPiece(new ChessPiece(PlayerColor.BLUE,"Rat",1));
+                }
+            }
+        }
+    }
+
+
+    public ChessPiece getChessPieceAt(ChessboardPoint point) {
         return getGridAt(point).getPiece();
     }
 

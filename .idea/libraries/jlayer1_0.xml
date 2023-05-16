@@ -1,0 +1,18 @@
+<component name="libraryTable">
+  <library name="jlayer1.0">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../../../../../下载/jlayer1.0.1" />
+      <root url="file://$PROJECT_DIR$/jlayer1.0.1" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="file://$PROJECT_DIR$/../../../../../下载/jlayer1.0.1/JLayer1.0.1/doc" />
+      <root url="file://$PROJECT_DIR$/jlayer1.0.1/JLayer1.0.1/doc" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../../../../../下载/jlayer1.0.1/JLayer1.0.1/src" />
+      <root url="file://$PROJECT_DIR$/../../../../../下载/jlayer1.0.1/JLayer1.0.1/srctest" />
+      <root url="file://$PROJECT_DIR$/jlayer1.0.1/JLayer1.0.1/src" />
+      <root url="file://$PROJECT_DIR$/jlayer1.0.1/JLayer1.0.1/srctest" />
+    </SOURCES>
+  </library>
+</component>

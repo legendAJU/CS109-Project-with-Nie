@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="apidocs2">
+    <CLASSES />
+    <JAVADOC>
+      <root url="file://$PROJECT_DIR$/jflac-1.3/jflac-1.3/target/site/apidocs" />
+    </JAVADOC>
+    <SOURCES />
+  </library>
+</component>

@@ -13,6 +13,11 @@ import view.PalcesComponent.DensComponent;
 import view.PalcesComponent.TrapsComponent;
 
 import javax.swing.*;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
 
 /**
  * Controller is the connection between model and view,
@@ -913,4 +918,163 @@ public class GameController implements GameListener {
             view.repaint();
         }
     }
+
+    //Some functions
+
+    public void restartTheGame(){
+        model.removeAllPieces();
+        model.initPieces();
+        view.removeAllPieceComponent();
+        view.initiateChessComponent(model);
+        currentPlayer = PlayerColor.BLUE;
+        view.repaint();
+
+
+    }
+
+    public void loadTextFileAndLoadTheGame(String archive){
+        String path = "D:\\大一\\大一下课程\\java\\FirstDraftOfProject\\CS109-Project-with-Nie\\CS109-2023-Sping-ChessDemo\\GameFiles\\" + archive;
+
+        try {
+            List<String> lines = Files.readAllLines(Path.of(path));
+            model.removeAllPieces();
+            model.setPiecesFromText(lines);
+            int count1 = 0;
+            int count2 = 0;
+            //Chech whether there are other animals in the water
+            for (int i = 3; i < 6 ; i++) {
+                for (int j = 1; j < 3 ; j++) {
+                    if(model.getChessPieceAt(new ChessboardPoint(i,j)) != null){
+                        if(!model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Rat")){
+                            count1++;
+                        }
+                    }
+                }
+            }
+            //Check whether Dens or Traps are in the right places
+            for (int i = 0; i < 9; i++) {
+                for (int j = 0; j < 7; j++) {
+                    if(model.getChessPieceAt(new ChessboardPoint(i,j)) != null){
+                        if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Traps")){
+                            if(!((i == 0 && (j == 2 || j ==4)) || (i == 1 && j==3) || (i == 8 && (j == 2 || j ==4)) || (i == 7 && j==3))){
+                                count2 ++;
+                            }
+                        }
+                        if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Dens")){
+                            if(!((i == 0 && j ==3) || (i == 8 && j == 3))){
+                                count2++;
+                            }
+                        }
+                    }
+
+                }
+            }
+            if(count1 == 0 && count2 == 0){
+                view.removeAllPieceComponent();
+                view.initiateChessComponent(model);
+                currentPlayer = getCurrentPlayerFromText(lines);
+                view.repaint();
+            }else{
+                JOptionPane.showMessageDialog(null, "Your archive is damaged");
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public PlayerColor getCurrentPlayerFromText(List<String> lines){
+        PlayerColor currentColor = PlayerColor.BLUE;
+        if(lines.get(9).charAt(0) == '0'){
+            currentColor = PlayerColor.BLUE;
+        }else if((lines.get(9).charAt(0) == '1')){
+            currentColor = PlayerColor.RED;
+        }
+        return currentColor;
+    }
+
+    public void storeGameIntoFile(String archive){
+        String path = "D:\\大一\\大一下课程\\java\\FirstDraftOfProject\\CS109-Project-with-Nie\\CS109-2023-Sping-ChessDemo\\GameFiles\\" + archive;
+
+        try {
+            List<String> lines = Files.readAllLines(Path.of(path));
+            char[][] fileElement = new char[10][8];
+            //fileElement[9][0] = '1';
+            for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
+                for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
+                   fileElement[i][j] = lines.get(i).charAt(j);
+                }
+            }
+            for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
+                for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
+                    if(model.getChessPieceAt(new ChessboardPoint(i,j)) != null){
+                        if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Elephant") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.BLUE) ){
+                            fileElement[i][j] = 'C';
+                        }else if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Elephant") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.RED)){
+                            fileElement[i][j] = 'c';
+                        }
+                        if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Lion") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.BLUE) ){
+                            fileElement[i][j] = 'D';
+                        }else if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Lion") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.RED)){
+                            fileElement[i][j] = 'd';
+                        }if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Tiger") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.BLUE) ){
+                            fileElement[i][j] = 'E';
+                        }else if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Tiger") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.RED)){
+                            fileElement[i][j] = 'e';
+                        }if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Leopard") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.BLUE) ){
+                            fileElement[i][j] = 'F';
+                        }else if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Leopard") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.RED)){
+                            fileElement[i][j] = 'f';
+                        }if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Wolf") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.BLUE) ){
+                            fileElement[i][j] = 'G';
+                        }else if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Wolf") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.RED)){
+                            fileElement[i][j] = 'g';
+                        }if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Dog") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.BLUE) ){
+                            fileElement[i][j] = 'H';
+                        }else if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Dog") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.RED)){
+                            fileElement[i][j] = 'h';
+                        }if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Cat") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.BLUE) ){
+                            fileElement[i][j] = 'I';
+                        }else if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Cat") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.RED)){
+                            fileElement[i][j] = 'i';
+                        }if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Rat") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.BLUE) ){
+                            fileElement[i][j] = 'J';
+                        }else if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Rat") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.RED)){
+                            fileElement[i][j] = 'j';
+                        }if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Traps") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.BLUE) ){
+                            fileElement[i][j] = 'B';
+                        }else if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Traps") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.RED)){
+                            fileElement[i][j] = 'b';
+                        }if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Dens") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.BLUE) ){
+                            fileElement[i][j] = 'A';
+                        }else if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Dens") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.RED)){
+                            fileElement[i][j] = 'a';
+                        }
+                    }else if(model.getChessPieceAt(new ChessboardPoint(i,j)) == null){
+                        fileElement[i][j] = '2';
+                    }
+
+                }
+            }
+            if(currentPlayer == PlayerColor.BLUE){
+                fileElement[9][0] = '0';
+            }else{
+                fileElement[9][0] = '1';
+            }
+            try (FileWriter writer = new FileWriter(path)) {
+                for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
+                    for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
+                        writer.write(fileElement[i][j]);
+                    }
+                    writer.write(System.lineSeparator());
+                }
+                writer.write(fileElement[9][0]);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
+
