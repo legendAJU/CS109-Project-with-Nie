@@ -31,6 +31,9 @@ public class GameController implements GameListener {
 
     private Chessboard model;
     private ChessboardComponent view;
+
+
+
     private PlayerColor currentPlayer;
 
     // Record whether there is a selected piece before
@@ -1075,6 +1078,9 @@ public class GameController implements GameListener {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+    public PlayerColor getCurrentPlayer() {
+        return currentPlayer;
     }
 }
 

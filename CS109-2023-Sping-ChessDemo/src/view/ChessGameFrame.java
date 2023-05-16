@@ -1,9 +1,12 @@
 package view;
 
 import controller.GameController;
+import model.PlayerColor;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * 这个类表示游戏过程中的整个游戏界面，是一切的载体
@@ -35,11 +38,12 @@ public class ChessGameFrame extends JFrame {
 
 
         addChessboard();
-        addLabel();
+        addNameLabel();
         addResetButton();
         addLoadButton();
         addStoreButton();
         addRegretButton();
+       addCurrentPlayerLabel();
     }
 
     public ChessboardComponent getChessboardComponent() {
@@ -62,11 +66,25 @@ public class ChessGameFrame extends JFrame {
     /**
      * 在游戏面板中添加标签
      */
-    private void addLabel() {
-        JLabel statusLabel = new JLabel("Sample label");
+    private void addNameLabel() {
+        JLabel statusLabel = new JLabel("斗兽棋");
         statusLabel.setLocation(HEIGTH, HEIGTH / 10);
         statusLabel.setSize(200, 60);
-        statusLabel.setFont(new Font("Rockwell", Font.BOLD, 20));
+        statusLabel.setFont(new Font("Rockwell", Font.BOLD, 60));
+        add(statusLabel);
+    }
+    private void addCurrentPlayerLabel(){
+        JLabel statusLabel = new JLabel("CurrentPlayerMessage");
+        statusLabel.setOpaque(false);
+        statusLabel.setLocation(HEIGTH / 2 - 120  , HEIGTH / 40);
+        statusLabel.setSize(400, 60);
+        Timer timer = new Timer(10, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                statusLabel.setText("Current Player: " + chessboardComponent.getGameController().getCurrentPlayer());
+            }
+        });
+        timer.start();
+        statusLabel.setFont(new Font("Rockwell", Font.BOLD, 24));
         add(statusLabel);
     }
 
