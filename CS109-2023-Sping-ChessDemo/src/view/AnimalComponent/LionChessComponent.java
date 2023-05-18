@@ -43,7 +43,7 @@ public class LionChessComponent extends JComponent {
         if(owner == PlayerColor.BLUE){
             icon = new ImageIcon("E:\\OneDrive - 南方科技大学\\桌面\\大一下\\cs\\斗兽棋\\resource\\LionInBlue.png");
         }else if(owner == PlayerColor.RED){
-            icon = new ImageIcon("E:\\OneDrive - 南方科技大学\\桌面\\大一下\\cs\\斗兽棋\\LionInRed.png");
+            icon = new ImageIcon("E:\\OneDrive - 南方科技大学\\桌面\\大一下\\cs\\斗兽棋\\resource\\LionInRed.png");
         }
         Image image = icon.getImage();
         int newWidth = image.getWidth(null) / 2; // 计算缩小后的宽度

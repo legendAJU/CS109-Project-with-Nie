@@ -188,6 +188,9 @@ public class Chessboard {
         if (getChessPieceAt(src) == null || getChessPieceAt(dest) != null) {
             return false;
         }
+        if (getChessPieceAt(src).getRank() == 1&&calculateDistance(src, dest) != 1){
+            return false;
+        }
         if (dest.checkWater() == 1 || dest.checkWater() == 2) {
             return getChessPieceAt(src).getRank() == 1;
         }
@@ -240,6 +243,9 @@ public class Chessboard {
         if (getChessPieceAt(src) == null || getChessPieceAt(dest) == null) {
             return false;
         }
+
+
+
         //虎与狮过河吃
         if ((getChessPieceAt(src).getRank() == 7 || getChessPieceAt(src).getRank() == 6) && src.checkWater() == 3) {
             if (src.getCol() == 0 && dest.getCol() == 3 && src.getRow() == dest.getRow()) {
@@ -280,6 +286,14 @@ public class Chessboard {
 
         //正常四周吃
         if (calculateDistance(src, dest) == 1) {
+            if (!Objects.equals(getChessPieceAt(src).getName(), "Dens") && Objects.equals(getChessPieceAt(dest).getName(), "Traps")){
+                return true;
+            }
+
+            //不能吃自家的
+            if (getChessPieceAt(src).getOwner() == getChessPieceAt(dest).getOwner()) {
+                return false;
+            }
             //水不能吃岸上 岸上也不能吃水里
             if ((src.checkWater() == 0 || src.checkWater() == 3) && (dest.checkWater() == 1 || dest.checkWater() == 2)) {
                 return false;

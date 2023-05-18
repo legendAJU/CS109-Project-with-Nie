@@ -8,6 +8,19 @@ public class Cell implements Serializable {
     // the position for chess
     private ChessPiece piece;
 
+    private int score;
+
+    public Cell (){
+        this.score = 0;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public int getScore() {
+        return score;
+    }
 
     public ChessPiece getPiece() {
         return piece;
