@@ -7,6 +7,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * 这个类表示游戏过程中的整个游戏界面，是一切的载体
@@ -44,6 +47,7 @@ public class ChessGameFrame extends JFrame {
         addStoreButton();
         addRegretButton();
        addCurrentPlayerLabel();
+       addCurrentRecordRoundLabel();
     }
 
     public ChessboardComponent getChessboardComponent() {
@@ -76,11 +80,25 @@ public class ChessGameFrame extends JFrame {
     private void addCurrentPlayerLabel(){
         JLabel statusLabel = new JLabel("CurrentPlayerMessage");
         statusLabel.setOpaque(false);
-        statusLabel.setLocation(HEIGTH / 2 - 120  , HEIGTH / 40);
+        statusLabel.setLocation(HEIGTH / 2 - 120  , HEIGTH / 90);
         statusLabel.setSize(400, 60);
         Timer timer = new Timer(10, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 statusLabel.setText("Current Player: " + chessboardComponent.getGameController().getCurrentPlayer());
+            }
+        });
+        timer.start();
+        statusLabel.setFont(new Font("Rockwell", Font.BOLD, 24));
+        add(statusLabel);
+    }
+    private void addCurrentRecordRoundLabel(){
+        JLabel statusLabel = new JLabel("CurrentRoundMessage");
+        statusLabel.setOpaque(false);
+        statusLabel.setLocation(HEIGTH, HEIGTH / 90);
+        statusLabel.setSize(400, 60);
+        Timer timer = new Timer(10, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                statusLabel.setText("Current Round: " + chessboardComponent.getGameController().getCurrentRound());
             }
         });
         timer.start();
@@ -120,21 +138,8 @@ public class ChessGameFrame extends JFrame {
             System.out.println("Click load");
             //String archive = JOptionPane.showInputDialog(this,"Input Archive here");
             //chessboardComponent.getGameController().loadTextFileAndLoadTheGame(archive);
-            Object[] options = {"GameLoader1.txt", "GameLoader2.txt", "GameLoader3.txt", "GameLoader4.txt", "GameLoader5.txt", "GameLoader6.txt"};
-            int result = JOptionPane.showOptionDialog(null, "Please select your archive", "Selection", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
-            if(result == 0){
-                chessboardComponent.getGameController().loadTextFileAndLoadTheGame("GameLoader1.txt");
-            }else if(result == 1){
-                chessboardComponent.getGameController().loadTextFileAndLoadTheGame("GameLoader2.txt");
-            }else if(result == 2){
-                chessboardComponent.getGameController().loadTextFileAndLoadTheGame("GameLoader3.txt");
-            }else if(result == 3){
-                chessboardComponent.getGameController().loadTextFileAndLoadTheGame("GameLoader4.txt");
-            }else if(result == 4){
-                chessboardComponent.getGameController().loadTextFileAndLoadTheGame("GameLoader5.txt");
-            }else if(result == 5){
-                chessboardComponent.getGameController().loadTextFileAndLoadTheGame("GameLoader6.txt");
-            }
+            String fileName = JOptionPane.showInputDialog(null, "Which archive do you want to play: ");
+            chessboardComponent.getGameController().loadTextFileAndLoadTheGame(fileName);
         });
     }
     private void addStoreButton() {
@@ -146,23 +151,41 @@ public class ChessGameFrame extends JFrame {
 
         button.addActionListener(e -> {
             System.out.println("Click store");
-            //String archive = JOptionPane.showInputDialog(this,"Input Archive here");
-            //chessboardComponent.getGameController().loadTextFileAndLoadTheGame(archive);
-            Object[] options = {"GameLoader1.txt", "GameLoader2.txt", "GameLoader3.txt", "GameLoader4.txt", "GameLoader5.txt", "GameLoader6.txt"};
-            int result = JOptionPane.showOptionDialog(null, "Please select which archive you want to store your game", "Selection", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
-            if(result == 0){
-                chessboardComponent.getGameController().storeGameIntoFile("GameLoader1.txt");
-            }else if(result == 1){
-                chessboardComponent.getGameController().storeGameIntoFile("GameLoader2.txt");
-            }else if(result == 2){
-                chessboardComponent.getGameController().storeGameIntoFile("GameLoader3.txt");
-            }else if(result == 3){
-                chessboardComponent.getGameController().storeGameIntoFile("GameLoader4.txt");
-            }else if(result == 4){
-                chessboardComponent.getGameController().storeGameIntoFile("GameLoader5.txt");
-            }else if(result == 5){
-                chessboardComponent.getGameController().storeGameIntoFile("GameLoader6.txt");
+            String archive = JOptionPane.showInputDialog(this,"Create a archive , please input your file name: ");
+            if(archive.substring(archive.length() - 4).equals(".txt")){
+                try {
+                    File file = new File("GameFiles/" + archive);
+                    file.createNewFile();
+                    try {
+                        FileWriter writer = new FileWriter(file);
+                        writer.write("D2BAB2E\n" +
+                                "2H2B2I2\n" +
+                                "J2F222C\n" +
+                                "222G222\n" +
+                                "2222222\n" +
+                                "222f222\n" +
+                                "c2g222j\n" +
+                                "2i2b2h2\n" +
+                                "e2bab2d");
+                        writer.write(0);
+                        writer.write(0);
+                        writer.close();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                    chessboardComponent.getGameController().storeGameIntoFile(file.getAbsolutePath());
+                }catch(IOException e1){
+                    e1.printStackTrace();
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "Your file name is not in the right formal(Error Code: 101)");
             }
+
+
+
+            //chessboardComponent.getGameController().loadTextFileAndLoadTheGame(archive);
+
+
         });
     }
     private void addRegretButton(){

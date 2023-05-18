@@ -64,30 +64,35 @@ public class AdvanceAi extends GameController {
     }
 
     // after a valid move swap the player
-    private void swapColor() {
+    public void swapColor() {
         currentPlayer = currentPlayer == PlayerColor.BLUE ? PlayerColor.RED : PlayerColor.BLUE;
     }
 
-    private boolean win() {
+    public boolean win() {
         // TODO: Check the board if there is a winner
-        if (model.getGrid()[0][3] != null || model.getGrid()[8][3] != null) {
+        if((model.getGrid()[0][3] != null || model.getGrid()[8][3] != null) && (!model.getChessPieceAt(new ChessboardPoint(0,3)).getName() .equals("Dens")) || (!model.getChessPieceAt(new ChessboardPoint(8,3)).getName() .equals("Dens"))){
             return true;
-        }
-        int countRed = 0;
-        int countBlue = 0;
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 7; j++) {
-                if (model.getGrid()[i][j].getPiece().getOwner() == PlayerColor.RED) {
-                    countRed++;
-                }
-                if (model.getGrid()[i][j].getPiece().getOwner() == PlayerColor.BLUE) {
-                    countBlue++;
+        }else{
+            int countRed = 0 ;
+            int countBlue = 0;
+            for (int i = 0; i < 9; i++) {
+                for (int j = 0; j < 7; j++) {
+                    if(model.getGrid()[i][j].getPiece() != null){
+                        if (model.getGrid()[i][j].getPiece().getOwner()==PlayerColor.RED && (!model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Traps")) && (!model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Dens"))){
+                            countRed++;
+                        }
+                        if (model.getGrid()[i][j].getPiece().getOwner()==PlayerColor.BLUE && (!model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Traps")) && (!model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Dens"))){
+                            countBlue++;
+                        }
+                    }
+
                 }
             }
+            if (countRed==0||countBlue==0){
+                return true;
+            }
         }
-        if (countRed == 0 || countBlue == 0) {
-            return true;
-        }
+
         return false;
     }
 

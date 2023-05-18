@@ -39,6 +39,9 @@ public class GameController implements GameListener {
     // Record whether there is a selected piece before
     private ChessboardPoint selectedPoint;
 
+    private int currentRound = 0;
+
+
     public GameController(ChessboardComponent view, Chessboard model) {
         this.view = view;
         this.model = model;
@@ -58,26 +61,34 @@ public class GameController implements GameListener {
         }
     }
 
-    // after a valid move swap the player
-    private void swapColor() {
-        currentPlayer = currentPlayer == PlayerColor.BLUE ? PlayerColor.RED : PlayerColor.BLUE;
+    public int getCurrentRound() {
+        return currentRound;
     }
 
-    private boolean win() {
+    // after a valid move swap the player
+    public void swapColor() {
+        currentPlayer = currentPlayer == PlayerColor.BLUE ? PlayerColor.RED : PlayerColor.BLUE;
+        currentRound++;
+    }
+
+    public boolean win() {
         // TODO: Check the board if there is a winner
-        if (model.getGrid()[0][3]!= null||model.getGrid()[8][3]!= null){
+        if((model.getGrid()[0][3] != null || model.getGrid()[8][3] != null) && (!model.getChessPieceAt(new ChessboardPoint(0,3)).getName() .equals("Dens")) || (!model.getChessPieceAt(new ChessboardPoint(8,3)).getName() .equals("Dens"))){
             return true;
         }
         int countRed = 0 ;
         int countBlue = 0;
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 7; j++) {
-                if (model.getGrid()[i][j].getPiece().getOwner()==PlayerColor.RED){
-                    countRed++;
+                if(model.getGrid()[i][j].getPiece() != null){
+                    if (model.getGrid()[i][j].getPiece().getOwner()==PlayerColor.RED && (!model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Traps")) && (!model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Dens"))){
+                        countRed++;
+                    }
+                    if (model.getGrid()[i][j].getPiece().getOwner()==PlayerColor.BLUE && (!model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Traps")) && (!model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Dens"))){
+                        countBlue++;
+                    }
                 }
-                if (model.getGrid()[i][j].getPiece().getOwner()==PlayerColor.BLUE){
-                    countBlue++;
-                }
+
             }
         }
         if (countRed==0||countBlue==0){
@@ -106,12 +117,6 @@ public class GameController implements GameListener {
                 view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfRat(selectedPoint));
                 view.setTrapsAtGrid(selectedPoint,new TrapsComponent(PlayerColor.RED,72));
 
-                selectedPoint = null;
-                swapColor();
-                view.repaint();
-            }else{
-                model.moveChessPiece(selectedPoint, point);
-                view.setChessComponentAtGrid(point, view.removeChessComponentAtGridOfRat(selectedPoint));
                 selectedPoint = null;
                 swapColor();
                 view.repaint();
@@ -927,6 +932,7 @@ public class GameController implements GameListener {
     public void restartTheGame(){
         model.removeAllPieces();
         model.initPieces();
+        currentRound = 0;
         view.removeAllPieceComponent();
         view.initiateChessComponent(model);
         currentPlayer = PlayerColor.BLUE;
@@ -936,54 +942,147 @@ public class GameController implements GameListener {
     }
 
     public void loadTextFileAndLoadTheGame(String archive){
-        String path = "E:\\OneDrive - 南方科技大学\\桌面\\大一下\\cs\\斗兽棋\\cs5_16\\CS109-Project-with-Nie-master\\CS109-2023-Sping-ChessDemo\\GameFiles\\" + archive;
+        String path = "GameFiles/" + archive;
+        //文件格式不对判断
+        int count3 = 0;
+        if(!archive.substring(archive.length() - 3).equals("txt")){
+            count3 ++;
+        }
 
-        try {
+        //棋盘大小不对判断
+        int count4 = 0;
+            try {
             List<String> lines = Files.readAllLines(Path.of(path));
-            model.removeAllPieces();
-            model.setPiecesFromText(lines);
-            int count1 = 0;
-            int count2 = 0;
-            //Chech whether there are other animals in the water
-            for (int i = 3; i < 6 ; i++) {
-                for (int j = 1; j < 3 ; j++) {
-                    if(model.getChessPieceAt(new ChessboardPoint(i,j)) != null){
-                        if(!model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Rat")){
-                            count1++;
-                        }
-                    }
-                }
-            }
-            //Check whether Dens or Traps are in the right places
-            for (int i = 0; i < 9; i++) {
-                for (int j = 0; j < 7; j++) {
-                    if(model.getChessPieceAt(new ChessboardPoint(i,j)) != null){
-                        if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Traps")){
-                            if(!((i == 0 && (j == 2 || j ==4)) || (i == 1 && j==3) || (i == 8 && (j == 2 || j ==4)) || (i == 7 && j==3))){
-                                count2 ++;
-                            }
-                        }
-                        if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Dens")){
-                            if(!((i == 0 && j ==3) || (i == 8 && j == 3))){
-                                count2++;
-                            }
-                        }
-                    }
-
-                }
-            }
-            if(count1 == 0 && count2 == 0){
-                view.removeAllPieceComponent();
-                view.initiateChessComponent(model);
-                currentPlayer = getCurrentPlayerFromText(lines);
-                view.repaint();
+            if(lines.size() != 10){
+                count4++;
             }else{
-                JOptionPane.showMessageDialog(null, "Your archive is damaged");
+                for (int i = 0; i < 9; i++) {
+                    if(lines.get(i).length() != 7){
+                        count4++;
+                    }else if(lines.get(i).length() == 7){
+                        for (int j = 0; j < lines.get(i).length(); j++) {
+                            if(lines.get(i).charAt(j) == ' '){
+                                count4++;
+                            }
+                        }
+                    }
+                }
             }
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        //棋盘棋子错误判断
+        int count5 = 0;
+            try {
+            List<String> lines = Files.readAllLines(Path.of(path));
+                for (int i = 0; i < 8; i++) {
+                    for (int j = 0; j < 6; j++) {
+                        if(lines.get(i).charAt(j) != 'A'
+                                && lines.get(i).charAt(j) != 'a'
+                                && lines.get(i).charAt(j) != 'B'
+                                && lines.get(i).charAt(j) != 'b'
+                                && lines.get(i).charAt(j) != 'C'
+                                && lines.get(i).charAt(j) != 'c'
+                                && lines.get(i).charAt(j) != 'D'
+                                && lines.get(i).charAt(j) != 'd'
+                                && lines.get(i).charAt(j) != 'E'
+                                && lines.get(i).charAt(j) != 'e'
+                                && lines.get(i).charAt(j) != 'F'
+                                && lines.get(i).charAt(j) != 'f'
+                                && lines.get(i).charAt(j) != 'G'
+                                && lines.get(i).charAt(j) != 'g'
+                                && lines.get(i).charAt(j) != 'H'
+                                && lines.get(i).charAt(j) != 'h'
+                                && lines.get(i).charAt(j) != 'I'
+                                && lines.get(i).charAt(j) != 'i'
+                                && lines.get(i).charAt(j) != 'J'
+                                && lines.get(i).charAt(j) != 'j'
+                                && lines.get(i).charAt(j) != '2'){
+                            count5++;
+                        }
+                    }
+                }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        //棋盘无行棋方
+        int count6 = 0;
+        try {
+            List<String> lines = Files.readAllLines(Path.of(path));
+            if(lines.get(9).charAt(0) != '0'
+                && lines.get(9).charAt(0) != '1'){
+                count6++;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        if(count3 != 0){
+            JOptionPane.showMessageDialog(null, "Your archive is damaged(Error Code: 101)");
+        }
+        if(count3 == 0 && count4 != 0){
+            JOptionPane.showMessageDialog(null, "Your archive is damaged(Error Code: 102)");
+        }
+        if(count3 == 0 && count4 == 0 && count5 != 0){
+            JOptionPane.showMessageDialog(null, "Your archive is damaged(Error Code: 103)");
+        }
+        if(count3 == 0 && count4 == 0 && count5 == 0 && count6 != 0){
+            JOptionPane.showMessageDialog(null, "Your archive is damaged(Error Code: 104)");
+        }
+        if(count3 == 0 && count4 == 0 && count5 == 0 && count6 == 0){
+            try {
+                List<String> lines = Files.readAllLines(Path.of(path));
+                model.removeAllPieces();
+                model.setPiecesFromText(lines);
+                int count1 = 0;
+                int count2 = 0;
+
+                //Chech whether there are other animals in the water
+                for (int i = 3; i < 6 ; i++) {
+                    for (int j = 1; j < 3 ; j++) {
+                        if(model.getChessPieceAt(new ChessboardPoint(i,j)) != null){
+                            if(!model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Rat")){
+                                count1++;
+                            }
+                        }
+                    }
+                }
+                //Check whether Dens or Traps are in the right places
+                for (int i = 0; i < 9; i++) {
+                    for (int j = 0; j < 7; j++) {
+                        if(model.getChessPieceAt(new ChessboardPoint(i,j)) != null){
+                            if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Traps")){
+                                if(!((i == 0 && (j == 2 || j ==4)) || (i == 1 && j==3) || (i == 8 && (j == 2 || j ==4)) || (i == 7 && j==3))){
+                                    count2 ++;
+                                }
+                            }
+                            if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Dens")){
+                                if(!((i == 0 && j ==3) || (i == 8 && j == 3))){
+                                    count2++;
+                                }
+                            }
+                        }
+
+                    }
+                }
+                //Check whether the documents are in the right formal
+                if(!archive.endsWith(".txt")){
+                    count3 ++;
+                }
+                if(count1 == 0 && count2 == 0 && count3 == 0){
+                    view.removeAllPieceComponent();
+                    view.initiateChessComponent(model);
+                    currentPlayer = getCurrentPlayerFromText(lines);
+                    currentRound = getCurrentRoundFromText(lines);
+                    view.repaint();
+                }else if(count3 != 0){
+                    JOptionPane.showMessageDialog(null, "Your archive is damaged(Error Code: 101)");
+                }
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
     }
     public PlayerColor getCurrentPlayerFromText(List<String> lines){
         PlayerColor currentColor = PlayerColor.BLUE;
@@ -994,12 +1093,14 @@ public class GameController implements GameListener {
         }
         return currentColor;
     }
+    public int getCurrentRoundFromText(List<String> lines ){
+        return lines.get(9).charAt(1);
+    }
 
     public void storeGameIntoFile(String archive){
-        String path = "E:\\OneDrive - 南方科技大学\\桌面\\大一下\\cs\\斗兽棋\\cs5_16\\CS109-Project-with-Nie-master\\CS109-2023-Sping-ChessDemo\\GameFiles\\" + archive;
 
         try {
-            List<String> lines = Files.readAllLines(Path.of(path));
+            List<String> lines = Files.readAllLines(Path.of(archive));
             char[][] fileElement = new char[10][8];
             //fileElement[9][0] = '1';
             for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
@@ -1063,7 +1164,8 @@ public class GameController implements GameListener {
             }else{
                 fileElement[9][0] = '1';
             }
-            try (FileWriter writer = new FileWriter(path)) {
+            fileElement[9][1] = (char)currentRound;
+            try (FileWriter writer = new FileWriter(archive)) {
                 for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
                     for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
                         writer.write(fileElement[i][j]);
@@ -1071,6 +1173,7 @@ public class GameController implements GameListener {
                     writer.write(System.lineSeparator());
                 }
                 writer.write(fileElement[9][0]);
+                writer.write(fileElement[9][1]);
             } catch (IOException e) {
                 e.printStackTrace();
             }

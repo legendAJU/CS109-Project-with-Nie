@@ -331,40 +331,89 @@ public class ChessboardComponent extends JComponent {
             } else if(clickedComponent.getComponents()[0].getName().equals("Elephant")){
                 System.out.print("One chess here and ");
                 gameController.onPlayerClickChessPiece(getChessboardPoint(e.getPoint()), (ElephantChessComponent) clickedComponent.getComponents()[0]);
+                if(getGameController().win()){
+                    getGameController().swapColor();
+                    JLabel label = new JLabel("Winner is：" + getGameController().getCurrentPlayer());
+                    JOptionPane.showMessageDialog(this, label);
+                }
             } else if(clickedComponent.getComponents()[0].getName().equals("Tiger")){
                 System.out.print("One chess here and ");
                 gameController.onPlayerClickChessPiece(getChessboardPoint(e.getPoint()), (TigerChessComponent) clickedComponent.getComponents()[0]);
+                if(getGameController().win()){
+                    getGameController().swapColor();
+                    JLabel label = new JLabel("Winner is：" + getGameController().getCurrentPlayer());
+                    JOptionPane.showMessageDialog(this, label);
+                }
             }
             else if(clickedComponent.getComponents()[0].getName().equals("Lion")){
                 System.out.print("One chess here and ");
                 gameController.onPlayerClickChessPiece(getChessboardPoint(e.getPoint()), (LionChessComponent) clickedComponent.getComponents()[0]);
+                if(getGameController().win()){
+                    getGameController().swapColor();
+                    JLabel label = new JLabel("Winner is：" + getGameController().getCurrentPlayer());
+                    JOptionPane.showMessageDialog(this, label);
+                }
             }
             else if(clickedComponent.getComponents()[0].getName().equals("Dog")){
                 System.out.print("One chess here and ");
                 gameController.onPlayerClickChessPiece(getChessboardPoint(e.getPoint()), (DogChessComponent) clickedComponent.getComponents()[0]);
-            }
+                if(getGameController().win()){
+                    getGameController().swapColor();
+                    JLabel label = new JLabel("Winner is：" + getGameController().getCurrentPlayer());
+                    JOptionPane.showMessageDialog(this, label);
+                }}
             else if(clickedComponent.getComponents()[0].getName().equals("Cat")){
                 System.out.print("One chess here and ");
                 gameController.onPlayerClickChessPiece(getChessboardPoint(e.getPoint()), (CatChessComponent) clickedComponent.getComponents()[0]);
+                if(getGameController().win()){
+                    getGameController().swapColor();
+                    JLabel label = new JLabel("Winner is：" + getGameController().getCurrentPlayer());
+                    JOptionPane.showMessageDialog(this, label);
+                }
             }
             else if(clickedComponent.getComponents()[0].getName().equals("Rat")){
                 System.out.print("One chess here and ");
                 gameController.onPlayerClickChessPiece(getChessboardPoint(e.getPoint()), (RatChessComponent) clickedComponent.getComponents()[0]);
+                if(getGameController().win()){
+                    getGameController().swapColor();
+                    JLabel label = new JLabel("Winner is：" + getGameController().getCurrentPlayer());
+                    JOptionPane.showMessageDialog(this, label);
+                }
             }
             else if(clickedComponent.getComponents()[0].getName().equals("Wolf")){
                 System.out.print("One chess here and ");
                 gameController.onPlayerClickChessPiece(getChessboardPoint(e.getPoint()), (WolfChessComponent) clickedComponent.getComponents()[0]);
+                if(getGameController().win()){
+                    getGameController().swapColor();
+                    JLabel label = new JLabel("Winner is：" + getGameController().getCurrentPlayer());
+                    JOptionPane.showMessageDialog(this, label);
+                }
             }
             else if(clickedComponent.getComponents()[0].getName().equals("Leopard")){
                 System.out.print("One chess here and ");
                 gameController.onPlayerClickChessPiece(getChessboardPoint(e.getPoint()), (LeopardChessComponent) clickedComponent.getComponents()[0]);
-            }else if(clickedComponent.getComponents()[0].getName().equals("Traps")){
+
+                if(getGameController().win()){
+                    getGameController().swapColor();
+                    JLabel label = new JLabel("Winner is：" + getGameController().getCurrentPlayer());
+                    JOptionPane.showMessageDialog(this, label);
+                }}else if(clickedComponent.getComponents()[0].getName().equals("Traps")){
                 System.out.print("One chess here and ");
                 gameController.onPlayerClickChessPiece(getChessboardPoint(e.getPoint()), (TrapsComponent) clickedComponent.getComponents()[0]);
+                if(getGameController().win()){
+                    getGameController().swapColor();
+                    JLabel label = new JLabel("Winner is：" + getGameController().getCurrentPlayer());
+                    JOptionPane.showMessageDialog(this, label);
+                }
             }
             else if(clickedComponent.getComponents()[0].getName().equals("Dens")){
                 System.out.print("One chess here and ");
                 gameController.onPlayerClickChessPiece(getChessboardPoint(e.getPoint()), (DensComponent) clickedComponent.getComponents()[0]);
+                if(getGameController().win()){
+                    getGameController().swapColor();
+                    JLabel label = new JLabel("Winner is：" + getGameController().getCurrentPlayer());
+                    JOptionPane.showMessageDialog(this, label);
+                }
             }
         }
     }

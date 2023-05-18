@@ -41,9 +41,9 @@ public class DogChessComponent extends JComponent {
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         ImageIcon icon = null;
         if(owner == PlayerColor.BLUE){
-            icon = new ImageIcon("E:\\OneDrive - 南方科技大学\\桌面\\大一下\\cs\\斗兽棋\\resource\\DogInBlue.png");
+            icon = new ImageIcon("resource/DogInBlue.png");
         }else if(owner == PlayerColor.RED){
-            icon = new ImageIcon("E:\\OneDrive - 南方科技大学\\桌面\\大一下\\cs\\斗兽棋\\resource\\DogInRed.png");
+            icon = new ImageIcon("resource/DogInRed.png");
         }
         Image image = icon.getImage();
         int newWidth = image.getWidth(null) / 2; // 计算缩小后的宽度
