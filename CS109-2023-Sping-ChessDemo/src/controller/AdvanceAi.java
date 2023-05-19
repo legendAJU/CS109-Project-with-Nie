@@ -36,6 +36,8 @@ public class AdvanceAi extends GameController {
 
     private PlayerColor ai;
 
+    private int currentRound = 0;
+
 
     private PlayerColor currentPlayer;
 
@@ -66,29 +68,30 @@ public class AdvanceAi extends GameController {
     // after a valid move swap the player
     public void swapColor() {
         currentPlayer = currentPlayer == PlayerColor.BLUE ? PlayerColor.RED : PlayerColor.BLUE;
+        currentRound++;
     }
 
     public boolean win() {
         // TODO: Check the board if there is a winner
-        if((model.getGrid()[0][3] != null || model.getGrid()[8][3] != null) && (!model.getChessPieceAt(new ChessboardPoint(0,3)).getName() .equals("Dens")) || (!model.getChessPieceAt(new ChessboardPoint(8,3)).getName() .equals("Dens"))){
+        if ((model.getGrid()[0][3] != null || model.getGrid()[8][3] != null) && (!model.getChessPieceAt(new ChessboardPoint(0, 3)).getName().equals("Dens")) || (!model.getChessPieceAt(new ChessboardPoint(8, 3)).getName().equals("Dens"))) {
             return true;
-        }else{
-            int countRed = 0 ;
+        } else {
+            int countRed = 0;
             int countBlue = 0;
             for (int i = 0; i < 9; i++) {
                 for (int j = 0; j < 7; j++) {
-                    if(model.getGrid()[i][j].getPiece() != null){
-                        if (model.getGrid()[i][j].getPiece().getOwner()==PlayerColor.RED && (!model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Traps")) && (!model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Dens"))){
+                    if (model.getGrid()[i][j].getPiece() != null) {
+                        if (model.getGrid()[i][j].getPiece().getOwner() == PlayerColor.RED && (!model.getChessPieceAt(new ChessboardPoint(i, j)).getName().equals("Traps")) && (!model.getChessPieceAt(new ChessboardPoint(i, j)).getName().equals("Dens"))) {
                             countRed++;
                         }
-                        if (model.getGrid()[i][j].getPiece().getOwner()==PlayerColor.BLUE && (!model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Traps")) && (!model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Dens"))){
+                        if (model.getGrid()[i][j].getPiece().getOwner() == PlayerColor.BLUE && (!model.getChessPieceAt(new ChessboardPoint(i, j)).getName().equals("Traps")) && (!model.getChessPieceAt(new ChessboardPoint(i, j)).getName().equals("Dens"))) {
                             countBlue++;
                         }
                     }
 
                 }
             }
-            if (countRed==0||countBlue==0){
+            if (countRed == 0 || countBlue == 0) {
                 return true;
             }
         }
@@ -96,6 +99,10 @@ public class AdvanceAi extends GameController {
         return false;
     }
 
+    @Override
+    public int getCurrentRound() {
+        return currentRound;
+    }
 
     // click an empty cell
     @Override
@@ -990,6 +997,7 @@ public class AdvanceAi extends GameController {
         model.removeAllPieces();
         model.initPieces();
         view.removeAllPieceComponent();
+        currentRound = 0;
         if (ai == PlayerColor.BLUE) {
             currentPlayer = PlayerColor.BLUE;
             aiMove();
@@ -1002,72 +1010,166 @@ public class AdvanceAi extends GameController {
 
     }
 
-    public void loadTextFileAndLoadTheGame(String archive) {
-        String path = "E:\\OneDrive - 南方科技大学\\桌面\\大一下\\cs\\斗兽棋\\cs5_16\\CS109-Project-with-Nie-master\\CS109-2023-Sping-ChessDemo\\GameFiles\\" + archive;
+    public void loadTextFileAndLoadTheGame(String archive){
+        String path = "GameFiles/" + archive;
+        //文件格式不对判断
+        int count3 = 0;
+        if(!archive.substring(archive.length() - 3).equals("txt")){
+            count3 ++;
+        }
 
+        //棋盘大小不对判断
+        int count4 = 0;
         try {
             List<String> lines = Files.readAllLines(Path.of(path));
-            model.removeAllPieces();
-            model.setPiecesFromText(lines);
-            int count1 = 0;
-            int count2 = 0;
-            //Chech whether there are other animals in the water
-            for (int i = 3; i < 6; i++) {
-                for (int j = 1; j < 3; j++) {
-                    if (model.getChessPieceAt(new ChessboardPoint(i, j)) != null) {
-                        if (!model.getChessPieceAt(new ChessboardPoint(i, j)).getName().equals("Rat")) {
-                            count1++;
+            if(lines.size() != 10){
+                count4++;
+            }else{
+                for (int i = 0; i < 9; i++) {
+                    if(lines.get(i).length() != 7){
+                        count4++;
+                    }else if(lines.get(i).length() == 7){
+                        for (int j = 0; j < lines.get(i).length(); j++) {
+                            if(lines.get(i).charAt(j) == ' '){
+                                count4++;
+                            }
                         }
                     }
                 }
             }
-            //Check whether Dens or Traps are in the right places
-            for (int i = 0; i < 9; i++) {
-                for (int j = 0; j < 7; j++) {
-                    if (model.getChessPieceAt(new ChessboardPoint(i, j)) != null) {
-                        if (model.getChessPieceAt(new ChessboardPoint(i, j)).getName().equals("Traps")) {
-                            if (!((i == 0 && (j == 2 || j == 4)) || (i == 1 && j == 3) || (i == 8 && (j == 2 || j == 4)) || (i == 7 && j == 3))) {
-                                count2++;
-                            }
-                        }
-                        if (model.getChessPieceAt(new ChessboardPoint(i, j)).getName().equals("Dens")) {
-                            if (!((i == 0 && j == 3) || (i == 8 && j == 3))) {
-                                count2++;
-                            }
-                        }
-                    }
-
-                }
-            }
-            if (count1 == 0 && count2 == 0) {
-                view.removeAllPieceComponent();
-                view.initiateChessComponent(model);
-                currentPlayer = getCurrentPlayerFromText(lines);
-                view.repaint();
-            } else {
-                JOptionPane.showMessageDialog(null, "Your archive is damaged");
-            }
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
+        //棋盘棋子错误判断
+        int count5 = 0;
+        try {
+            List<String> lines = Files.readAllLines(Path.of(path));
+            for (int i = 0; i < 8; i++) {
+                for (int j = 0; j < 6; j++) {
+                    if(lines.get(i).charAt(j) != 'A'
+                            && lines.get(i).charAt(j) != 'a'
+                            && lines.get(i).charAt(j) != 'B'
+                            && lines.get(i).charAt(j) != 'b'
+                            && lines.get(i).charAt(j) != 'C'
+                            && lines.get(i).charAt(j) != 'c'
+                            && lines.get(i).charAt(j) != 'D'
+                            && lines.get(i).charAt(j) != 'd'
+                            && lines.get(i).charAt(j) != 'E'
+                            && lines.get(i).charAt(j) != 'e'
+                            && lines.get(i).charAt(j) != 'F'
+                            && lines.get(i).charAt(j) != 'f'
+                            && lines.get(i).charAt(j) != 'G'
+                            && lines.get(i).charAt(j) != 'g'
+                            && lines.get(i).charAt(j) != 'H'
+                            && lines.get(i).charAt(j) != 'h'
+                            && lines.get(i).charAt(j) != 'I'
+                            && lines.get(i).charAt(j) != 'i'
+                            && lines.get(i).charAt(j) != 'J'
+                            && lines.get(i).charAt(j) != 'j'
+                            && lines.get(i).charAt(j) != '2'){
+                        count5++;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        //棋盘无行棋方
+        int count6 = 0;
+        try {
+            List<String> lines = Files.readAllLines(Path.of(path));
+            if(lines.get(9).charAt(0) != '0'
+                    && lines.get(9).charAt(0) != '1'){
+                count6++;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        if(count3 != 0){
+            JOptionPane.showMessageDialog(null, "Your archive is damaged(Error Code: 101)");
+        }
+        if(count3 == 0 && count4 != 0){
+            JOptionPane.showMessageDialog(null, "Your archive is damaged(Error Code: 102)");
+        }
+        if(count3 == 0 && count4 == 0 && count5 != 0){
+            JOptionPane.showMessageDialog(null, "Your archive is damaged(Error Code: 103)");
+        }
+        if(count3 == 0 && count4 == 0 && count5 == 0 && count6 != 0){
+            JOptionPane.showMessageDialog(null, "Your archive is damaged(Error Code: 104)");
+        }
+        if(count3 == 0 && count4 == 0 && count5 == 0 && count6 == 0){
+            try {
+                List<String> lines = Files.readAllLines(Path.of(path));
+                model.removeAllPieces();
+                model.setPiecesFromText(lines);
+                int count1 = 0;
+                int count2 = 0;
 
-    public PlayerColor getCurrentPlayerFromText(List<String> lines) {
+                //Chech whether there are other animals in the water
+                for (int i = 3; i < 6 ; i++) {
+                    for (int j = 1; j < 3 ; j++) {
+                        if(model.getChessPieceAt(new ChessboardPoint(i,j)) != null){
+                            if(!model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Rat")){
+                                count1++;
+                            }
+                        }
+                    }
+                }
+                //Check whether Dens or Traps are in the right places
+                for (int i = 0; i < 9; i++) {
+                    for (int j = 0; j < 7; j++) {
+                        if(model.getChessPieceAt(new ChessboardPoint(i,j)) != null){
+                            if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Traps")){
+                                if(!((i == 0 && (j == 2 || j ==4)) || (i == 1 && j==3) || (i == 8 && (j == 2 || j ==4)) || (i == 7 && j==3))){
+                                    count2 ++;
+                                }
+                            }
+                            if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Dens")){
+                                if(!((i == 0 && j ==3) || (i == 8 && j == 3))){
+                                    count2++;
+                                }
+                            }
+                        }
+
+                    }
+                }
+                //Check whether the documents are in the right formal
+                if(!archive.endsWith(".txt")){
+                    count3 ++;
+                }
+                if(count1 == 0 && count2 == 0 && count3 == 0){
+                    view.removeAllPieceComponent();
+                    view.initiateChessComponent(model);
+                    currentPlayer = getCurrentPlayerFromText(lines);
+                    currentRound = getCurrentRoundFromText(lines);
+                    view.repaint();
+                }else if(count3 != 0){
+                    JOptionPane.showMessageDialog(null, "Your archive is damaged(Error Code: 101)");
+                }
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+    }
+    public PlayerColor getCurrentPlayerFromText(List<String> lines){
         PlayerColor currentColor = PlayerColor.BLUE;
-        if (lines.get(9).charAt(0) == '0') {
+        if(lines.get(9).charAt(0) == '0'){
             currentColor = PlayerColor.BLUE;
-        } else if ((lines.get(9).charAt(0) == '1')) {
+        }else if((lines.get(9).charAt(0) == '1')){
             currentColor = PlayerColor.RED;
         }
         return currentColor;
     }
+    public int getCurrentRoundFromText(List<String> lines ){
+        return lines.get(9).charAt(1);
+    }
 
-    public void storeGameIntoFile(String archive) {
-        String path = "E:\\OneDrive - 南方科技大学\\桌面\\大一下\\cs\\斗兽棋\\cs5_16\\CS109-Project-with-Nie-master\\CS109-2023-Sping-ChessDemo\\GameFiles\\" + archive;
+    public void storeGameIntoFile(String archive){
 
         try {
-            List<String> lines = Files.readAllLines(Path.of(path));
+            List<String> lines = Files.readAllLines(Path.of(archive));
             char[][] fileElement = new char[10][8];
             //fileElement[9][0] = '1';
             for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
@@ -1077,69 +1179,62 @@ public class AdvanceAi extends GameController {
             }
             for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
                 for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
-                    if (model.getChessPieceAt(new ChessboardPoint(i, j)) != null) {
-                        if (model.getChessPieceAt(new ChessboardPoint(i, j)).getName().equals("Elephant") && model.getChessPieceAt(new ChessboardPoint(i, j)).getOwner().equals(PlayerColor.BLUE)) {
+                    if(model.getChessPieceAt(new ChessboardPoint(i,j)) != null){
+                        if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Elephant") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.BLUE) ){
                             fileElement[i][j] = 'C';
-                        } else if (model.getChessPieceAt(new ChessboardPoint(i, j)).getName().equals("Elephant") && model.getChessPieceAt(new ChessboardPoint(i, j)).getOwner().equals(PlayerColor.RED)) {
+                        }else if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Elephant") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.RED)){
                             fileElement[i][j] = 'c';
                         }
-                        if (model.getChessPieceAt(new ChessboardPoint(i, j)).getName().equals("Lion") && model.getChessPieceAt(new ChessboardPoint(i, j)).getOwner().equals(PlayerColor.BLUE)) {
+                        if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Lion") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.BLUE) ){
                             fileElement[i][j] = 'D';
-                        } else if (model.getChessPieceAt(new ChessboardPoint(i, j)).getName().equals("Lion") && model.getChessPieceAt(new ChessboardPoint(i, j)).getOwner().equals(PlayerColor.RED)) {
+                        }else if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Lion") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.RED)){
                             fileElement[i][j] = 'd';
-                        }
-                        if (model.getChessPieceAt(new ChessboardPoint(i, j)).getName().equals("Tiger") && model.getChessPieceAt(new ChessboardPoint(i, j)).getOwner().equals(PlayerColor.BLUE)) {
+                        }if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Tiger") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.BLUE) ){
                             fileElement[i][j] = 'E';
-                        } else if (model.getChessPieceAt(new ChessboardPoint(i, j)).getName().equals("Tiger") && model.getChessPieceAt(new ChessboardPoint(i, j)).getOwner().equals(PlayerColor.RED)) {
+                        }else if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Tiger") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.RED)){
                             fileElement[i][j] = 'e';
-                        }
-                        if (model.getChessPieceAt(new ChessboardPoint(i, j)).getName().equals("Leopard") && model.getChessPieceAt(new ChessboardPoint(i, j)).getOwner().equals(PlayerColor.BLUE)) {
+                        }if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Leopard") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.BLUE) ){
                             fileElement[i][j] = 'F';
-                        } else if (model.getChessPieceAt(new ChessboardPoint(i, j)).getName().equals("Leopard") && model.getChessPieceAt(new ChessboardPoint(i, j)).getOwner().equals(PlayerColor.RED)) {
+                        }else if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Leopard") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.RED)){
                             fileElement[i][j] = 'f';
-                        }
-                        if (model.getChessPieceAt(new ChessboardPoint(i, j)).getName().equals("Wolf") && model.getChessPieceAt(new ChessboardPoint(i, j)).getOwner().equals(PlayerColor.BLUE)) {
+                        }if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Wolf") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.BLUE) ){
                             fileElement[i][j] = 'G';
-                        } else if (model.getChessPieceAt(new ChessboardPoint(i, j)).getName().equals("Wolf") && model.getChessPieceAt(new ChessboardPoint(i, j)).getOwner().equals(PlayerColor.RED)) {
+                        }else if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Wolf") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.RED)){
                             fileElement[i][j] = 'g';
-                        }
-                        if (model.getChessPieceAt(new ChessboardPoint(i, j)).getName().equals("Dog") && model.getChessPieceAt(new ChessboardPoint(i, j)).getOwner().equals(PlayerColor.BLUE)) {
+                        }if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Dog") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.BLUE) ){
                             fileElement[i][j] = 'H';
-                        } else if (model.getChessPieceAt(new ChessboardPoint(i, j)).getName().equals("Dog") && model.getChessPieceAt(new ChessboardPoint(i, j)).getOwner().equals(PlayerColor.RED)) {
+                        }else if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Dog") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.RED)){
                             fileElement[i][j] = 'h';
-                        }
-                        if (model.getChessPieceAt(new ChessboardPoint(i, j)).getName().equals("Cat") && model.getChessPieceAt(new ChessboardPoint(i, j)).getOwner().equals(PlayerColor.BLUE)) {
+                        }if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Cat") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.BLUE) ){
                             fileElement[i][j] = 'I';
-                        } else if (model.getChessPieceAt(new ChessboardPoint(i, j)).getName().equals("Cat") && model.getChessPieceAt(new ChessboardPoint(i, j)).getOwner().equals(PlayerColor.RED)) {
+                        }else if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Cat") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.RED)){
                             fileElement[i][j] = 'i';
-                        }
-                        if (model.getChessPieceAt(new ChessboardPoint(i, j)).getName().equals("Rat") && model.getChessPieceAt(new ChessboardPoint(i, j)).getOwner().equals(PlayerColor.BLUE)) {
+                        }if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Rat") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.BLUE) ){
                             fileElement[i][j] = 'J';
-                        } else if (model.getChessPieceAt(new ChessboardPoint(i, j)).getName().equals("Rat") && model.getChessPieceAt(new ChessboardPoint(i, j)).getOwner().equals(PlayerColor.RED)) {
+                        }else if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Rat") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.RED)){
                             fileElement[i][j] = 'j';
-                        }
-                        if (model.getChessPieceAt(new ChessboardPoint(i, j)).getName().equals("Traps") && model.getChessPieceAt(new ChessboardPoint(i, j)).getOwner().equals(PlayerColor.BLUE)) {
+                        }if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Traps") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.BLUE) ){
                             fileElement[i][j] = 'B';
-                        } else if (model.getChessPieceAt(new ChessboardPoint(i, j)).getName().equals("Traps") && model.getChessPieceAt(new ChessboardPoint(i, j)).getOwner().equals(PlayerColor.RED)) {
+                        }else if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Traps") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.RED)){
                             fileElement[i][j] = 'b';
-                        }
-                        if (model.getChessPieceAt(new ChessboardPoint(i, j)).getName().equals("Dens") && model.getChessPieceAt(new ChessboardPoint(i, j)).getOwner().equals(PlayerColor.BLUE)) {
+                        }if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Dens") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.BLUE) ){
                             fileElement[i][j] = 'A';
-                        } else if (model.getChessPieceAt(new ChessboardPoint(i, j)).getName().equals("Dens") && model.getChessPieceAt(new ChessboardPoint(i, j)).getOwner().equals(PlayerColor.RED)) {
+                        }else if(model.getChessPieceAt(new ChessboardPoint(i,j)).getName().equals("Dens") && model.getChessPieceAt(new ChessboardPoint(i,j)).getOwner().equals(PlayerColor.RED)){
                             fileElement[i][j] = 'a';
                         }
-                    } else if (model.getChessPieceAt(new ChessboardPoint(i, j)) == null) {
+                    }else if(model.getChessPieceAt(new ChessboardPoint(i,j)) == null){
                         fileElement[i][j] = '2';
                     }
 
                 }
             }
-            if (currentPlayer == PlayerColor.BLUE) {
+            if(currentPlayer == PlayerColor.BLUE){
                 fileElement[9][0] = '0';
-            } else {
+            }else{
                 fileElement[9][0] = '1';
             }
-            try (FileWriter writer = new FileWriter(path)) {
+            fileElement[9][1] = (char)currentRound;
+            try (FileWriter writer = new FileWriter(archive)) {
                 for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
                     for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
                         writer.write(fileElement[i][j]);
@@ -1147,6 +1242,7 @@ public class AdvanceAi extends GameController {
                     writer.write(System.lineSeparator());
                 }
                 writer.write(fileElement[9][0]);
+                writer.write(fileElement[9][1]);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -1167,6 +1263,7 @@ public class AdvanceAi extends GameController {
         model.undo();
         view.initiateChessComponent(model);
         view.repaint();
+        currentRound = currentRound-2;
 
     }
 
@@ -1181,7 +1278,7 @@ public class AdvanceAi extends GameController {
                             && !Objects.equals(model.getGrid()[i][j].getPiece().getName(), "Traps")) {
                         int scoreAll = 0;
                         points.add(new ChessboardPoint(i, j));
-                        scoreAll += model.getGrid()[i][j].getScore();
+         //               scoreAll += model.getGrid()[i][j].getScore();
                         ChessboardPoint temp = new ChessboardPoint(i, j);
                         //找他的其他点
                         for (int k = 0; k < 9; k++) {
@@ -1286,25 +1383,28 @@ public class AdvanceAi extends GameController {
                     //给棋子赋分
                     if (model.getGrid()[i][j].getPiece() != null) {
                         if (Objects.equals(model.getGrid()[i][j].getPiece().getName(), "Rat")) {
-                            model.getGrid()[i][j].setScore(model.getGrid()[i][j].getScore() + 2100);
+                            model.getGrid()[i][j].setScore(model.getGrid()[i][j].getScore() + 5100);
                         }
                         if (Objects.equals(model.getGrid()[i][j].getPiece().getName(), "Cat")) {
-                            model.getGrid()[i][j].setScore(model.getGrid()[i][j].getScore() + 2150);
+                            model.getGrid()[i][j].setScore(model.getGrid()[i][j].getScore() + 5150);
                         }
                         if (Objects.equals(model.getGrid()[i][j].getPiece().getName(), "Dog")) {
-                            model.getGrid()[i][j].setScore(model.getGrid()[i][j].getScore() + 2200);
+                            model.getGrid()[i][j].setScore(model.getGrid()[i][j].getScore() + 5200);
                         }
                         if (Objects.equals(model.getGrid()[i][j].getPiece().getName(), "Wolf")) {
-                            model.getGrid()[i][j].setScore(model.getGrid()[i][j].getScore() + 2250);
+                            model.getGrid()[i][j].setScore(model.getGrid()[i][j].getScore() + 5250);
                         }
                         if (Objects.equals(model.getGrid()[i][j].getPiece().getName(), "Leopard")) {
-                            model.getGrid()[i][j].setScore(model.getGrid()[i][j].getScore() + 2300);
+                            model.getGrid()[i][j].setScore(model.getGrid()[i][j].getScore() + 5300);
+                        }
+                        if (Objects.equals(model.getGrid()[i][j].getPiece().getName(), "Tiger")) {
+                            model.getGrid()[i][j].setScore(model.getGrid()[i][j].getScore() + 5400);
                         }
                         if (Objects.equals(model.getGrid()[i][j].getPiece().getName(), "Lion")) {
-                            model.getGrid()[i][j].setScore(model.getGrid()[i][j].getScore() + 2500);
+                            model.getGrid()[i][j].setScore(model.getGrid()[i][j].getScore() + 5500);
                         }
                         if (Objects.equals(model.getGrid()[i][j].getPiece().getName(), "Elephant")) {
-                            model.getGrid()[i][j].setScore(model.getGrid()[i][j].getScore() + 2600);
+                            model.getGrid()[i][j].setScore(model.getGrid()[i][j].getScore() + 5600);
                         }
                         if (Objects.equals(model.getGrid()[i][j].getPiece().getName(), "Dens")) {
                             model.getGrid()[i][j].setScore(model.getGrid()[i][j].getScore() + 100000);
@@ -1330,19 +1430,19 @@ public class AdvanceAi extends GameController {
                     }
 
                     //防御进攻加分
-                    model.getGrid()[0][1].setScore(model.getGrid()[0][1].getScore() + 100);
-                    model.getGrid()[0][5].setScore(model.getGrid()[0][5].getScore() + 100);
-                    model.getGrid()[1][2].setScore(model.getGrid()[1][2].getScore() + 100);
-                    model.getGrid()[1][4].setScore(model.getGrid()[1][4].getScore() + 100);
-                    model.getGrid()[0][2].setScore(model.getGrid()[0][2].getScore() -500);
-                    model.getGrid()[0][4].setScore(model.getGrid()[0][4].getScore() -500);
-                    model.getGrid()[1][3].setScore(model.getGrid()[1][3].getScore() -500);
+//                    model.getGrid()[0][1].setScore(model.getGrid()[0][1].getScore() +50);
+//                    model.getGrid()[0][5].setScore(model.getGrid()[0][5].getScore() +50);
+//                    model.getGrid()[1][2].setScore(model.getGrid()[1][2].getScore() +50);
+//                    model.getGrid()[1][4].setScore(model.getGrid()[1][4].getScore() +50) ;
+                    model.getGrid()[0][2].setScore(model.getGrid()[0][2].getScore() - 500);
+                    model.getGrid()[0][4].setScore(model.getGrid()[0][4].getScore() - 500);
+                    model.getGrid()[1][3].setScore(model.getGrid()[1][3].getScore() - 500);
 
-                    model.getGrid()[8][1].setScore(model.getGrid()[8][1].getScore() + 100);
-                    model.getGrid()[8][5].setScore(model.getGrid()[8][5].getScore() + 100);
-                    model.getGrid()[7][2].setScore(model.getGrid()[7][2].getScore() + 100);
-                    model.getGrid()[7][4].setScore(model.getGrid()[7][4].getScore() + 100);
-                    model.getGrid()[6][3].setScore(model.getGrid()[6][3].getScore() + 100);
+                    model.getGrid()[8][1].setScore(model.getGrid()[8][1].getScore() + 50);
+                    model.getGrid()[8][5].setScore(model.getGrid()[8][5].getScore() + 50);
+                    model.getGrid()[7][2].setScore(model.getGrid()[7][2].getScore() + 50);
+                    model.getGrid()[7][4].setScore(model.getGrid()[7][4].getScore() + 50);
+                    model.getGrid()[6][3].setScore(model.getGrid()[6][3].getScore() + 50);
 
                     model.getGrid()[7][3].setScore(model.getGrid()[7][3].getScore() + 400);
                     model.getGrid()[8][4].setScore(model.getGrid()[8][4].getScore() + 400);
@@ -1358,25 +1458,28 @@ public class AdvanceAi extends GameController {
                 for (int j = 0; j < 7; j++) {
                     //给棋子赋分
                     if (Objects.equals(model.getGrid()[i][j].getPiece().getName(), "Rat")) {
-                        model.getGrid()[i][j].setScore(model.getGrid()[i][j].getScore() + 2100);
+                        model.getGrid()[i][j].setScore(model.getGrid()[i][j].getScore() + 5100);
                     }
                     if (Objects.equals(model.getGrid()[i][j].getPiece().getName(), "Cat")) {
-                        model.getGrid()[i][j].setScore(model.getGrid()[i][j].getScore() + 2150);
+                        model.getGrid()[i][j].setScore(model.getGrid()[i][j].getScore() + 5150);
                     }
                     if (Objects.equals(model.getGrid()[i][j].getPiece().getName(), "Dog")) {
-                        model.getGrid()[i][j].setScore(model.getGrid()[i][j].getScore() + 2200);
+                        model.getGrid()[i][j].setScore(model.getGrid()[i][j].getScore() + 5200);
                     }
                     if (Objects.equals(model.getGrid()[i][j].getPiece().getName(), "Wolf")) {
-                        model.getGrid()[i][j].setScore(model.getGrid()[i][j].getScore() + 2250);
+                        model.getGrid()[i][j].setScore(model.getGrid()[i][j].getScore() + 5250);
                     }
                     if (Objects.equals(model.getGrid()[i][j].getPiece().getName(), "Leopard")) {
-                        model.getGrid()[i][j].setScore(model.getGrid()[i][j].getScore() + 2300);
+                        model.getGrid()[i][j].setScore(model.getGrid()[i][j].getScore() + 5300);
+                    }
+                    if (Objects.equals(model.getGrid()[i][j].getPiece().getName(), "Tiger")) {
+                        model.getGrid()[i][j].setScore(model.getGrid()[i][j].getScore() + 5400);
                     }
                     if (Objects.equals(model.getGrid()[i][j].getPiece().getName(), "Lion")) {
-                        model.getGrid()[i][j].setScore(model.getGrid()[i][j].getScore() + 2500);
+                        model.getGrid()[i][j].setScore(model.getGrid()[i][j].getScore() + 5500);
                     }
                     if (Objects.equals(model.getGrid()[i][j].getPiece().getName(), "Elephant")) {
-                        model.getGrid()[i][j].setScore(model.getGrid()[i][j].getScore() + 2600);
+                        model.getGrid()[i][j].setScore(model.getGrid()[i][j].getScore() + 5600);
                     }
                     if (Objects.equals(model.getGrid()[i][j].getPiece().getName(), "Dens")) {
                         model.getGrid()[i][j].setScore(model.getGrid()[i][j].getScore() + 100000);
@@ -1401,19 +1504,19 @@ public class AdvanceAi extends GameController {
                     }
 
                     //防御进攻加分
-                    model.getGrid()[0][1].setScore(model.getGrid()[0][1].getScore() + 100);
-                    model.getGrid()[0][5].setScore(model.getGrid()[0][5].getScore() + 100);
-                    model.getGrid()[1][2].setScore(model.getGrid()[1][2].getScore() + 100);
-                    model.getGrid()[1][4].setScore(model.getGrid()[1][4].getScore() + 100);
-                    model.getGrid()[2][3].setScore(model.getGrid()[2][3].getScore() + 100);
-                    model.getGrid()[8][2].setScore(model.getGrid()[8][2].getScore() -500);
-                    model.getGrid()[8][4].setScore(model.getGrid()[8][4].getScore() -500);
-                    model.getGrid()[7][3].setScore(model.getGrid()[7][3].getScore() -500);
+                    model.getGrid()[0][1].setScore(model.getGrid()[0][1].getScore() + 50);
+                    model.getGrid()[0][5].setScore(model.getGrid()[0][5].getScore() + 50);
+                    model.getGrid()[1][2].setScore(model.getGrid()[1][2].getScore() + 50);
+                    model.getGrid()[1][4].setScore(model.getGrid()[1][4].getScore() + 50);
+                    model.getGrid()[2][3].setScore(model.getGrid()[2][3].getScore() + 50);
+                    model.getGrid()[8][2].setScore(model.getGrid()[8][2].getScore() - 500);
+                    model.getGrid()[8][4].setScore(model.getGrid()[8][4].getScore() - 500);
+                    model.getGrid()[7][3].setScore(model.getGrid()[7][3].getScore() - 500);
 
-                    model.getGrid()[8][1].setScore(model.getGrid()[8][1].getScore() + 100);
-                    model.getGrid()[8][5].setScore(model.getGrid()[8][5].getScore() + 100);
-                    model.getGrid()[7][2].setScore(model.getGrid()[7][2].getScore() + 100);
-                    model.getGrid()[7][4].setScore(model.getGrid()[7][4].getScore() + 100);
+//                    model.getGrid()[8][1].setScore(model.getGrid()[8][1].getScore() + 100);
+//                    model.getGrid()[8][5].setScore(model.getGrid()[8][5].getScore() + 100);
+//                    model.getGrid()[7][2].setScore(model.getGrid()[7][2].getScore() + 100);
+//                    model.getGrid()[7][4].setScore(model.getGrid()[7][4].getScore() + 100);
 
                     model.getGrid()[1][3].setScore(model.getGrid()[1][3].getScore() + 400);
                     model.getGrid()[0][4].setScore(model.getGrid()[0][4].getScore() + 400);

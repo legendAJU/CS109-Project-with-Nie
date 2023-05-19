@@ -1193,6 +1193,8 @@ public class GameController implements GameListener {
         view.initiateChessComponent(model);
         swapColor();
         view.repaint();
+        currentRound= currentRound-2;
+
 
     }
 }
